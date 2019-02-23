@@ -21,4 +21,8 @@ public class UserDao {
         s.getTransaction().commit();
         s.close();
     }
+
+    public void update(User u) {
+
+    }
 }
