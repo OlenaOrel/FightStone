@@ -1,6 +1,6 @@
 YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
-1)  create 'update' method in UserDao
++++1)  create 'update' method in UserDao (zhenia)
 
 2)  create 'register.jsp'
 3)  create 'RegisterController' (/register) with GET mapped method
