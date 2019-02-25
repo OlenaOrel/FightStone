@@ -13,7 +13,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++8)  create 'fs_card' table  (zhenia)
 +++9)  create 'Card' entity  (zhenia)
-10) create 'CardDao' with necessary methods
++++10) create 'CardDao' with necessary methods (zhenia)
 11) create 'CardService' with 'get' method
 12) create 'getById' method
 
