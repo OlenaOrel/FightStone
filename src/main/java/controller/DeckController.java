@@ -41,6 +41,7 @@ public class DeckController {
             return out;
         } else {
             resp.sendRedirect("/fs/");
+            return null;
         }
     }
 }
