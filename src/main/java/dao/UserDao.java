@@ -21,6 +21,4 @@ public class UserDao {
         s.getTransaction().commit();
         s.close();
     }
-
-
 }

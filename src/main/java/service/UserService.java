@@ -2,9 +2,6 @@ package service;
 
 import dao.UserDao;
 import entity.User;
-import hibernate.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +30,4 @@ public class UserService {
         return udao.getByLogin(login);
     }
 
-    public User updateUser(User user) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = s.beginTransaction();
-        User u = (User) s.load(User.class, user.getLogin());
-        tx.commit();
-        return u;
-
-    }
 }
