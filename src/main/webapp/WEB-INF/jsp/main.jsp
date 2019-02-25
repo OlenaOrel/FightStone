@@ -16,9 +16,9 @@
 
 
 </div>
-
+<div class="container">
     <c:forEach items="${items}" var="i">
-        <div>
+        <div class="item">
 
             <h2>${i.name}</h2></p>
             <h3>${i.cost}</h3>
@@ -26,6 +26,7 @@
             <br/>
         </div>
     </c:forEach>
+</div>
 <div>
     <form>
         <input type="submit" value="Form Deck">
