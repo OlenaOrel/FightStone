@@ -30,4 +30,8 @@ public class UserService {
         return udao.getByLogin(login);
     }
 
+    public boolean isPassConfirm(String s1, String s2) {
+        return s1 != null && s1.equals(s2);
+    }
+
 }
