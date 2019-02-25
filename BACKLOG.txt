@@ -1,6 +1,6 @@
 YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
-1)  create 'update' method in UserDao
+1)  create 'update' method in UserDao (zhenia)
 
 2) +create 'register.jsp'
 3) +create 'RegisterController' (/register) with GET mapped method
@@ -11,9 +11,9 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 6)  create 'main.jsp'
 7)  create 'MainController' (/main) with GET mapped method
 
-8)  create 'fs_card' table
-9)  create 'Card' entity
-10) create 'CardDao' with necessary methods
++++8)  create 'fs_card' table  (zhenia)
++++9)  create 'Card' entity  (zhenia)
++++10) create 'CardDao' with necessary methods (zhenia)
 11) create 'CardService' with 'get' method
 12) create 'getById' method
 

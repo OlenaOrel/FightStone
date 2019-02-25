@@ -17,20 +17,17 @@ public class UserService {
         this.udao = udao;
     }
 
-    public boolean isUserExists(String login){
+    public boolean isUserExists(String login) {
         return udao.getByLogin(login) != null;
     }
-
-    public boolean isPassConfirm(String pass, String cpass) {
-        return pass.equals(cpass);
-    }
-
-    public void save(String login, String pass){
+  
+    public void save(String login, String pass) {
         udao.add(new User(new Random().nextInt(), login, pass,
                 0, 0, 0, "{}", "warrior"));
     }
 
-    public User getByLogin(String login){
+    public User getByLogin(String login) {
         return udao.getByLogin(login);
     }
+
 }
