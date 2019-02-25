@@ -2,9 +2,9 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 1)  create 'update' method in UserDao
 
-2)  create 'register.jsp'
-3)  create 'RegisterController' (/register) with GET mapped method
-4)  create POST mapped method to register users
+2) +create 'register.jsp'
+3) +create 'RegisterController' (/register) with GET mapped method
+4) +create POST mapped method to register users
 
 5)  create 'battle.jsp'
 
