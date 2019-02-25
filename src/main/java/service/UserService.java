@@ -20,7 +20,7 @@ public class UserService {
     public boolean isUserExists(String login) {
         return udao.getByLogin(login) != null;
     }
-
+  
     public void save(String login, String pass) {
         udao.add(new User(new Random().nextInt(), login, pass,
                 0, 0, 0, "{}", "warrior"));
