@@ -21,4 +21,12 @@ public class UserDao {
         s.getTransaction().commit();
         s.close();
     }
+
+    public void update(User u) {
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        s.update(u);
+        s.getTransaction().commit();
+        s.close();
+    }
 }
