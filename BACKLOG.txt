@@ -8,7 +8,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 5)  create 'battle.jsp'
 
-6)  create 'main.jsp'
++++6)  create 'main.jsp'
 7)  create 'MainController' (/main) with GET mapped method
 
 +++8)  create 'fs_card' table  (zhenia)
