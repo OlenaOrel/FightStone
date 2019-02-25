@@ -18,5 +18,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 12) create 'getById' method
 
 13) create deck.jsp
-14) create DeckController with GET method
++++14) create DeckController with GET method
+
+15) create POST deck method
 

@@ -11,6 +11,8 @@ import java.util.Random;
 @Service
 public class UserService {
 
+    private static final String USER = "user";
+
     private final UserDao udao;
 
     @Autowired
@@ -38,7 +40,11 @@ public class UserService {
     }
 
     public void setUserAttributeToSession(HttpSession session, User u) {
-        session.setAttribute("user", u);
+        session.setAttribute(USER, u);
+    }
+
+    public User getUserAttributeFromSession(HttpSession s) {
+        return (User) s.getAttribute(USER);
     }
 
 }
