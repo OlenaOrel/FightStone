@@ -10,8 +10,8 @@ import java.util.Objects;
 @Table(name = "fs_user")
 @Entity
 public class User implements Serializable {
-    private int id;
     @Id
+    private int id;
     private String login;
     private String pass;
     private int points;
