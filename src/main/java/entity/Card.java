@@ -15,15 +15,15 @@ public class Card {
     private String pic;
     @Column(name = "is_spell")
     private boolean isSpell;
-    private int damage;
-    private int armor;
+    private Integer damage;
+    private Integer armor;
     private String ability;
     private int cost;
 
     public Card() {
     }
 
-    public Card(int id, String name, String description, String pic, boolean isSpell, int damage, int armor, String ability, int cost) {
+    public Card(int id, String name, String description, String pic, boolean isSpell, Integer damage, Integer armor, String ability, int cost) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -75,19 +75,19 @@ public class Card {
         isSpell = spell;
     }
 
-    public int getDamage() {
+    public Integer getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(Integer damage) {
         this.damage = damage;
     }
 
-    public int getArmor() {
+    public Integer getArmor() {
         return armor;
     }
 
-    public void setArmor(int armor) {
+    public void setArmor(Integer armor) {
         this.armor = armor;
     }
 

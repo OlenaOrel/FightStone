@@ -3,9 +3,11 @@ package dao;
 import entity.Card;
 import hibernate.HibernateUtil;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class CardDao {
     public Card getById(int id) {
         Session s = HibernateUtil.getSessionFactory().openSession();
@@ -16,7 +18,7 @@ public class CardDao {
 
     public List<Card> getAllCards() {
         Session s = HibernateUtil.getSessionFactory().openSession();
-        List<Card> cards = s.createCriteria("FROM Card").list();
+        List<Card> cards = s.createQuery("FROM Card").list();
         s.close();
         return cards;
     }
