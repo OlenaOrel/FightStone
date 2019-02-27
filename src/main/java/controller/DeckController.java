@@ -37,6 +37,7 @@ public class DeckController {
             List<Card> allCards = cardService.getAllCards();
             ModelAndView out = new ModelAndView("deck");
             List<Card> userCards = cardService.getUserCards(u.getDeck());
+            userService.removeExistsCards(allCards, userCards);
             out.addObject("u", u);
             out.addObject("cards", allCards);
             out.addObject("userCards", userCards);

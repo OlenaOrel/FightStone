@@ -1,11 +1,13 @@
 package service;
 
 import dao.UserDao;
+import entity.Card;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -51,4 +53,8 @@ public class UserService {
         udao.update(u);
     }
 
+
+    public void removeExistsCards(List<Card> allCards, List<Card> userCards) {
+        allCards.removeAll(userCards);
+    }
 }
