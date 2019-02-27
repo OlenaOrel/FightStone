@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <style>
@@ -10,12 +11,10 @@
 <div>
     <nav>
         <div align='left' class="topnav" id="myTopnav">
-            <c:forEach items="${u}" var="i">
-            <h2>Level : ${i.lvl} </h2>
-            <h2>Points : ${i.points}</h2>
-            <h2>Stars : ${i.stars}</h2>
+            <h2>Level : ${u.lvl} </h2>
+            <h2>Points : ${u.points}</h2>
+            <h2>Stars : ${u.stars}</h2>
         </div>
-        </c:forEach>
     </nav>
 
 
@@ -32,7 +31,7 @@
     </c:forEach>
 </div>
 <div align='center'>
-    <form>
+    <form action="/fs/deck/" method="GET">
         <input type="submit" value="Form Deck">
 
     </form>
