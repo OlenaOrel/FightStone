@@ -6,8 +6,6 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++3)  create 'RegisterController' (/register) with GET mapped method
 +++4)  create POST mapped method to register users
 
-5)  create 'battle.jsp'
-
 +++6)  create 'main.jsp'
 +++7)  create 'MainController' (/main) with GET mapped method (zhenia)
 
@@ -20,5 +18,16 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++13) create deck.jsp
 +++14) create DeckController with GET method
 
-15) create POST deck method
++++15) create POST deck method
+
+16) create wait.jsp with 2 buttons - refresh and leave
+
+17) create Battle object
+18) create Battles component with Map<Integer, Battle> battlesList
+19) update waitPage method to check that user is not in the battle yet
+
+20) create template of battle.jsp
+21) create battle controller with get method
+
+22) update post deck method to create a battle if wait list is not empty
 
