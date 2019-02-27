@@ -16,13 +16,10 @@
             <h2>Stars : ${u.stars}</h2>
         </div>
     </nav>
-
-
 </div>
 <div align='center' class="container">
     <c:forEach items="${userCards}" var="i">
         <div class="item">
-
             <h3>${i.name}</h3>
             <h3>${i.cost}</h3>
             <img src='${i.pic}' alt='card'/>

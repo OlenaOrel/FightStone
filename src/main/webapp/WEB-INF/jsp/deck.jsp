@@ -28,25 +28,28 @@
             <td>All cards</td>
         </tr>
         <tr>
-
-
-            <td>
+            <td id="userCards">
                 <table style="width: 100%">
                     <c:set var="counter" value="${1}"/>
                     <c:forEach items="${userCards}" var="i">
                         <c:set var="counter" value="${counter+1}"/>
-                        <%--${counter+1}--%>
                         <c:if test="${counter%2==0}">
                             <tr>
                             <td style="width: 50%">
-                                    ${i.name}
-                                    ${i.description}
+                                <form action="/fs/deck?id=-${i.id}" method="post">
+                                        ${i.name}<br/>
+                                        ${i.description}<br/>
+                                    <input type="submit" value="Remove"/>
+                                </form>
                             </td>
                             <td>
                         </c:if>
                         <c:if test="${counter%2!=0}">
-                            ${i.name}
-                            ${i.description}
+                            <form action="/fs/deck?id=-${i.id}" method="post">
+                                    ${i.name}<br/>
+                                    ${i.description}<br/>
+                                <input type="submit" value="Remove"/>
+                            </form>
                             </td>
                             </tr>
                         </c:if>
@@ -56,7 +59,7 @@
             </td>
 
 
-            <td>
+            <td id="allCards">
 
                 <table style="width: 100%">
 
@@ -66,14 +69,20 @@
                         <c:if test="${counter%2==0}">
                             <tr>
                             <td style="width: 50%">
-                                    ${i.name}
-                                    ${i.description}
+                                <form action="/fs/deck?id=${i.id}" method="post">
+                                        ${i.name}<br/>
+                                        ${i.description}<br/>
+                                    <input type="submit" value="Add"/>
+                                </form>
                             </td>
                             <td>
                         </c:if>
                         <c:if test="${counter%2!=0}">
-                            ${i.name}
-                            ${i.description}
+                            <form action="/fs/deck?id=${i.id}" method="post">
+                                    ${i.name}<br/>
+                                    ${i.description}<br/>
+                                <input type="submit" value="Add"/>
+                            </form>
                             </td>
                             </tr>
                         </c:if>
