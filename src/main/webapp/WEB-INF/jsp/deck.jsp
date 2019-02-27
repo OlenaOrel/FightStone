@@ -93,5 +93,15 @@
         </tr>
     </table>
 </div>
+<div>
+    <form action="/fs/deck?id=0" method="post">
+        <input type="submit" value="Save Deck"/>
+    </form>
+</div>
+<div>
+    <form action="/fs/main/" method="get">
+        <input type="submit" value="Main Page"/>
+    </form>
+</div>
 </body>
 </html>

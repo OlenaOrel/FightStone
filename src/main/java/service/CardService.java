@@ -4,6 +4,7 @@ package service;
 import com.google.gson.Gson;
 import dao.CardDao;
 import entity.Card;
+import entity.User;
 import holder.CardHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,35 @@ public class CardService {
 
     public List<Card> getUserCards(String json) {
         List<Card> out = new LinkedList<>();
-        Gson gson = new Gson();
-        CardHolder cards = gson.fromJson(json, CardHolder.class);
-        for (Integer c : cards.cards) {
+        List<Integer> cards = getCardIdsFromJson(json);
+        for (Integer c : cards) {
             out.add(cardDao.getById(c));
         }
         return out;
+    }
 
+    public List<Integer> getCardIdsFromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, CardHolder.class).cards;
+    }
+
+    public boolean isTenCardsInDeck(String json) {
+        return getCardIdsFromJson(json).size() == 10;
+    }
+
+    public void removeCardFromUserDeck(User u, Integer id) {
+        List<Integer> ids = getCardIdsFromJson(u.getDeck());
+        ids.remove(id);
+        u.setDeck(getJsonFromUserCardsIds(ids));
+    }
+
+    public void addCardToUserDeck(User u, Integer id) {
+        List<Integer> ids = getCardIdsFromJson(u.getDeck());
+        ids.add(id);
+        u.setDeck(getJsonFromUserCardsIds(ids));
+    }
+
+    public String getJsonFromUserCardsIds(List<Integer> ids) {
+        return new Gson().toJson(new CardHolder(ids));
     }
 }

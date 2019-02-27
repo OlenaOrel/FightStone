@@ -47,4 +47,8 @@ public class UserService {
         return (User) s.getAttribute(USER);
     }
 
+    public void update(User u) {
+        udao.update(u);
+    }
+
 }
