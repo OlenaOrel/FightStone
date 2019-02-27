@@ -30,7 +30,13 @@
 <div align='center'>
     <form action="/fs/deck/" method="GET">
         <input type="submit" value="Form Deck">
+    </form>
+</div>
 
+<div align='center'>
+    <form action="/fs/wait/" method="POST">
+        <input type="hidden" name="bat" value="in"/>
+        <input type="submit" value="TO BATTLE">
     </form>
 </div>
 
