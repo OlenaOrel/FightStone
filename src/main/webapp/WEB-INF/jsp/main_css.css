@@ -5,23 +5,18 @@ body {
 
 
 nav {
-    background: #b4b4b4;
-    margin: auto;
-    width: 240px;
+    padding: 20px 20px 20px 600px;
+    width: 640px;
     text-align: left;
 }
 
-.topnav {
-    background-color: #5C8CA7;
-    font-size: 14px;
-    margin-top: 40px;
-}
-
-
 h2 {
+
+    background-color: #5C8CA7;
+    display: inline;
     border: 1px solid #000;
     padding: 13px;
-
+    margin: 10px;
 }
 
 .container {
