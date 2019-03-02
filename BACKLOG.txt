@@ -23,7 +23,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++16) create wait.jsp with 2 buttons - refresh and leave(katya)
 
 17) create Battle object
-18) create Battles component with Map<Integer, Battle> battlesList
++++18) create Battles component with Map<Integer, Battle> battlesList
 19) update waitPage method to check that user is not in the battle yet
 
 20) create template of battle.jsp
