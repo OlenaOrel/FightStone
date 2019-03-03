@@ -9,8 +9,9 @@
 </head>
 <body>
 <div>
-    <nav>
-        <div align='left' class="topnav" id="myTopnav">
+    <nav align='center'>
+        <div>
+            <h2>Login : ${u.login} </h2>
             <h2>Level : ${u.lvl} </h2>
             <h2>Points : ${u.points}</h2>
             <h2>Stars : ${u.stars}</h2>

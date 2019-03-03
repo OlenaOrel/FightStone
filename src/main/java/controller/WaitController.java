@@ -58,7 +58,6 @@ public class WaitController {
                 }
                 resp.sendRedirect("/fs/main/");
             }
-            resp.sendRedirect("/fs/main/");
         } else {
             resp.sendRedirect("/fs/");
         }
