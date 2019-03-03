@@ -1,5 +1,6 @@
 package controller;
 
+import collections.Battles;
 import collections.WaitUsers;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,12 @@ import java.io.IOException;
 public class WaitController {
     private final UserService userService;
     private final WaitUsers waitUsers;
-
+    private final Battles battles;
     @Autowired
-    public WaitController(UserService userService, WaitUsers waitUsers) {
+    public WaitController(UserService userService, WaitUsers waitUsers, Battles battles) {
         this.userService = userService;
         this.waitUsers = waitUsers;
+        this.battles = battles;
     }
 
     @GetMapping
@@ -32,7 +34,13 @@ public class WaitController {
                                  HttpServletResponse resp) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
-            return new ModelAndView("wait", "u", u);
+            if (waitUsers.getWaitList().size() == 1) {
+                return new ModelAndView("wait", "u", u);
+            } else {
+                req.getSession().getId();
+                resp.sendRedirect("/fs/battle/");
+                return null;
+            }
         } else {
             resp.sendRedirect("/fs/");
             return null;
