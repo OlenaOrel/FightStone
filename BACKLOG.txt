@@ -26,8 +26,8 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 18) create Battles component with Map<Integer, Battle> battlesList
 19) update waitPage method to check that user is not in the battle yet
 
-20) create template of battle.jsp
-21) create battle controller with get method
++++20) create template of battle.jsp (katya, lena)
++++21) create battle controller with get method (katya, lena)
 
 22) update post deck method to create a battle if wait list is not empty
 
