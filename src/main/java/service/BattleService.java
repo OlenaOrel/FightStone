@@ -59,4 +59,14 @@ public class BattleService {
 
         return b.getId();
     }
+
+    public Battle isUserInBattle(String login) {
+        for (Battle b : battles.getBattleList().values()) {
+            if (b.getPlayer1().getLogin().equals(login) ||
+                    b.getPlayer2().getLogin().equals(login)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }

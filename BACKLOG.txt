@@ -29,7 +29,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++21) create battle controller with get method (katya, lena)
 
 +++22) update post wait method to create a battle if wait list is not empty
-22.1) add user to battle if he is not created it
++++22.1) add user to battle if he is not created it
 
 23) create exit logic
 24) create users online list with main page view

@@ -1,6 +1,7 @@
 package controller;
 
 import collections.WaitUsers;
+import entity.Battle;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,11 +64,17 @@ public class WaitController {
                     User oppUser = waitService.getUserForBattle();
                     req.getSession().setAttribute("battleId", battleService.createBattle(u, oppUser));
                     resp.sendRedirect("/fs/battle/");
-                } else if (!waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
-                    waitUsers.getWaitList().put(u.getLogin(), u);
-                    resp.sendRedirect("/fs/wait/");
                 } else {
-                    resp.sendRedirect("/fs/wait/");
+                    Battle b = battleService.isUserInBattle(u.getLogin());
+                    if (b != null) {
+                        req.getSession().setAttribute("battleId", b.getId());
+                        resp.sendRedirect("/fs/battle/");
+                    } else {
+                        if (!waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
+                            waitUsers.getWaitList().put(u.getLogin(), u);
+                        }
+                        resp.sendRedirect("/fs/wait/");
+                    }
                 }
 
 
