@@ -35,3 +35,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 24) create users online list with main page view
 
 +++25) wait list size visible on main page (ALEX)
+
+26) create ActivePlayers map to simplify searching in battles process
+
++++27) fill battle.jsp

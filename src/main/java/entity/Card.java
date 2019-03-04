@@ -20,6 +20,8 @@ public class Card {
     private String ability;
     private int cost;
 
+    private transient boolean isCardCanMoove;
+
     public Card() {
     }
 
@@ -107,6 +109,13 @@ public class Card {
         this.cost = cost;
     }
 
+    public boolean isCardCanMoove() {
+        return isCardCanMoove;
+    }
+
+    public void setCardCanMoove(boolean cardCanMoove) {
+        isCardCanMoove = cardCanMoove;
+    }
 
     @Override
     public boolean equals(Object o) {

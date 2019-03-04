@@ -8,59 +8,106 @@
     <title>Battle</title>
 </head>
 <body>
-<div>
-    <div>
+<div id="he">
+    <div id="hero2">
         <nav>
             <div align='center' class="topnav">
-                <h2>Login : ${u.login} </h2>
-                <h2>Level : ${u.lvl} </h2>
-                <h2>Points : ${u.points}</h2>
-                <h2>Stars : ${u.stars}</h2>
+                <h2>Login : ${b.player2.login} </h2>
+                <h2>Level : ${b.player2.lvl} </h2>
+                <h2>Class : ${b.player2.clas}</h2>
+                <h2>HP : ${b.hp2}</h2>
             </div>
         </nav>
     </div>
-    <div align='left' class="container">
-        <c:forEach items="${userCards}" var="i">
-            <div class="item">
-                <img src='${i.pic}' alt='card'/>
-            </div>
-        </c:forEach>
+    <hr/>
+    <div align='left' class="container" id="deck_hand2">
+        <h2>Deck size : ${b.deck2.size()}</h2>
+        <h2>Hand size : ${b.inHand2.size()}</h2>
     </div>
-    <div align='right' class="container">
-        <c:forEach items="${userCards}" var="i">
+    <hr/>
+    <div align='right' class="container" id="table2">
+        <c:forEach items="${b.inHand2}" var="i">
             <div class="item">
+                <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
+                <h3>${i.damage} ${i.armor}</h3>
+                <c:if test="${b.fromTableChoosen1 != 0}">
+                    <form action="/fs/battle" method="post">
+                        <input type="hidden" name="attack" value="${i.id}"/>
+                        <input type="submit" value="Attack"/>
+                    </form>
+                </c:if>
             </div>
         </c:forEach>
     </div>
 </div>
-<div>
-
-</div>
-<div>
-    <div align='left' class="container">
-        <c:forEach items="${userCards}" var="i">
+<hr/>
+<c:if test="${b.move1}">
+    <form action="/fs/battle" method="post">
+        <input type="hidden" name="endTurn" value="true"/>
+        <input type="submit" value="End Turn"/>
+    </form>
+</c:if>
+<c:if test="${!b.move1}">
+    <form action="/fs/battle" method="get">
+        <input type="submit" value="Refresh"/>
+    </form>
+</c:if>
+<hr/>
+<div id="me">
+    <div align='right' class="container" id="table1">
+        <c:forEach items="${b.inHand1}" var="i">
             <div class="item">
+                <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
+                <h3>${i.damage} ${i.armor}</h3>
+                <c:if test="${i.cardCanMoove && b.fromHandChoosen1 == 0 && b.fromTableChoosen1 == 0}">
+                    <form action="/fs/battle" method="post">
+                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="submit" value="Choose"/>
+                    </form>
+                </c:if>
+                <c:if test="${b.fromTableChoosen1 == i.id}">
+                    <form action="/fs/battle" method="post">
+                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="submit" value="Unchoose"/>
+                    </form>
+                </c:if>
             </div>
         </c:forEach>
     </div>
-    <div align='right' class="container">
-        <c:forEach items="${userCards}" var="i">
+    <hr/>
+    <div align='left' class="container" id="deck_hand1">
+        <h2>Deck size : ${b.deck2.size()}</h2>
+        <h2>Hand:</h2>
+        <c:forEach items="${b.deck1}" var="i">
             <div class="item">
-                <h3>${i.name}</h3>
-                <h3>${i.cost}</h3>
+                <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
+                <h3>${i.damage} ${i.armor}</h3>
+                <c:if test="${i.cost <= b.mana1 && b.fromHandChoosen1 == 0 && b.fromTableChoosen1 == 0}">
+                    <form action="/fs/battle" method="post">
+                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="submit" value="Choose"/>
+                    </form>
+                </c:if>
+                <c:if test="${b.fromHandChoosen1 == i.id}">
+                    <form action="/fs/battle" method="post">
+                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="submit" value="Unchoose"/>
+                    </form>
+                </c:if>
             </div>
         </c:forEach>
     </div>
-    <div>
+    <hr/>
+    <div id="hero1">
         <nav>
             <div align='center' class="topnav">
-                <h2>Login : ${u.login} </h2>
-                <h2>Level : ${u.lvl} </h2>
-                <h2>Points : ${u.points}</h2>
-                <h2>Stars : ${u.stars}</h2>
+                <h2>Login : ${b.player1.login} </h2>
+                <h2>Level : ${b.player1.lvl} </h2>
+                <h2>Class : ${b.player1.clas}</h2>
+                <h2>HP : ${b.hp1}</h2>
             </div>
         </nav>
     </div>

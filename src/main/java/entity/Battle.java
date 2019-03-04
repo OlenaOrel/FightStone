@@ -29,11 +29,8 @@ public class Battle {
     private boolean isHeroPowered1;
     private boolean isHeroPowered2;
 
-    private boolean isFromHandChoosen1;
-    private boolean isFromHandChoosen2;
-
-    private boolean isFromTableChoosen1;
-    private boolean isFromTableChoosen2;
+    private int fromHandChoosen1;
+    private int fromTableChoosen1;
 
     public Battle() {
     }
@@ -174,35 +171,19 @@ public class Battle {
         isHeroPowered2 = heroPowered2;
     }
 
-    public boolean isFromHandChoosen1() {
-        return isFromHandChoosen1;
+    public int getFromHandChoosen1() {
+        return fromHandChoosen1;
     }
 
-    public void setFromHandChoosen1(boolean fromHandChoosen1) {
-        isFromHandChoosen1 = fromHandChoosen1;
+    public void setFromHandChoosen1(int fromHandChoosen1) {
+        fromHandChoosen1 = fromHandChoosen1;
     }
 
-    public boolean isFromHandChoosen2() {
-        return isFromHandChoosen2;
+    public int getFromTableChoosen1() {
+        return fromTableChoosen1;
     }
 
-    public void setFromHandChoosen2(boolean fromHandChoosen2) {
-        isFromHandChoosen2 = fromHandChoosen2;
-    }
-
-    public boolean isFromTableChoosen1() {
-        return isFromTableChoosen1;
-    }
-
-    public void setFromTableChoosen1(boolean fromTableChoosen1) {
-        isFromTableChoosen1 = fromTableChoosen1;
-    }
-
-    public boolean isFromTableChoosen2() {
-        return isFromTableChoosen2;
-    }
-
-    public void setFromTableChoosen2(boolean fromTableChoosen2) {
-        isFromTableChoosen2 = fromTableChoosen2;
+    public void setFromTableChoosen1(int fromTableChoosen1) {
+        fromTableChoosen1 = fromTableChoosen1;
     }
 }

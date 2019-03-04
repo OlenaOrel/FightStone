@@ -37,11 +37,11 @@ public class BattleService {
         b.setOnTable1(new LinkedList<>());
         b.setOnTable2(new LinkedList<>());
 
-        b.setNumberOfMove(0);
-        b.setMove1(false);
+        b.setNumberOfMove(1);
+        b.setMove1(true);
 
-        b.setMana1(0);
-        b.setMana2(0);
+        b.setMana1(1);
+        b.setMana2(1);
 
         b.setHp1(20);
         b.setHp2(20);
@@ -49,11 +49,9 @@ public class BattleService {
         b.setHeroPowered1(false);
         b.setHeroPowered2(false);
 
-        b.setFromHandChoosen1(false);
-        b.setFromHandChoosen2(false);
+        b.setFromHandChoosen1(0);
 
-        b.setFromTableChoosen1(false);
-        b.setFromTableChoosen2(false);
+        b.setFromTableChoosen1(0);
 
         battles.getBattleList().put(b.getId(), b);
 
@@ -68,5 +66,9 @@ public class BattleService {
             }
         }
         return null;
+    }
+
+    public Battle getBattleById(Integer id) {
+        return battles.getBattleList().get(id);
     }
 }
