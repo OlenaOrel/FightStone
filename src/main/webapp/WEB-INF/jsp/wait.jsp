@@ -11,7 +11,7 @@
 <body>
 <div class="block">
     <div align="center" class="button">
-        <form action="/fs/battle/" method="post">
+        <form action="/fs/wait/" method="post">
             <input type="hidden" name="bat" value="in"/>
             <input type="submit" value="Refresh"/>
         </form>

@@ -7,13 +7,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class Battles {
-    private Map<Integer, Battles> battleList = new ConcurrentHashMap<>();
+    private Map<Integer, Battle> battleList = new ConcurrentHashMap<>();
 
-    public Map<Integer, Battles> getBattleList() {
+    public Map<Integer, Battle> getBattleList() {
         return battleList;
     }
 
-    public void setBattleList(Map<Integer, Battles> battleList) {
+    public void setBattleList(Map<Integer, Battle> battleList) {
         this.battleList = battleList;
     }
 }

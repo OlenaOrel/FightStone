@@ -2,11 +2,11 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++1)  create 'update' method in UserDao
 
-+++2)  create 'register.jsp'
-+++3)  create 'RegisterController' (/register) with GET mapped method
-+++4)  create POST mapped method to register users
++++2)  create 'register.jsp'(katya, lena)
++++3)  create 'RegisterController' (/register) with GET mapped method(katya, lena)
++++4)  create POST mapped method to register users(katya, lena)
 
-+++6)  create 'main.jsp'
++++6)  create 'main.jsp'(katya)
 +++7)  create 'MainController' (/main) with GET mapped method (zhenia)
 
 +++8)  create 'fs_card' table  (zhenia)
@@ -20,10 +20,10 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++15) create POST deck method
 
-+++16) create wait.jsp with 2 buttons - refresh and leave(katya)
++++16) create wait.jsp with 2 buttons - refresh and leave(katya, lena)
 +++17) create Battle object (zhenia)
-+++18) create Battles component with Map<Integer, Battle> battlesList
-+++19) update waitPage method to check that user is not in the battle yet
++++18) create Battles component with Map<Integer, Battle> battlesList(katya, lena)
++++19) update waitPage method to check that user is not in the battle yet(katya, lena)
 
 +++20) create template of battle.jsp (katya, lena)
 +++21) create battle controller with get method (katya, lena)
