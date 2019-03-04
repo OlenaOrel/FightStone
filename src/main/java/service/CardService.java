@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CardService {
@@ -33,8 +34,8 @@ public class CardService {
     public List<Card> getUserCards(String json) {
         List<Card> out = new LinkedList<>();
         List<Integer> cards = getCardIdsFromJson(json);
-        for (Integer c : cards) {
-            out.add(cardDao.getById(c));
+        for (Integer id : cards) {
+            out.add(getById(id));
         }
         return out;
     }
@@ -62,5 +63,12 @@ public class CardService {
 
     public String getJsonFromUserCardsIds(List<Integer> ids) {
         return new Gson().toJson(new CardHolder(ids));
+    }
+
+    public List<Card> getAndRemoveTwoCardsFromTen(List<Card> tenCards) {
+        List<Card> out = new LinkedList<>();
+        out.add(tenCards.remove(new Random().nextInt(10)));
+        out.add(tenCards.remove(new Random().nextInt(9)));
+        return out;
     }
 }

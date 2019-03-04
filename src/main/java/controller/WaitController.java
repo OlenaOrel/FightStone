@@ -1,6 +1,5 @@
 package controller;
 
-import collections.Battles;
 import collections.WaitUsers;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.BattleService;
 import service.UserService;
+import service.WaitService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +21,16 @@ import java.io.IOException;
 @RequestMapping("/wait")
 public class WaitController {
     private final UserService userService;
+    private final WaitService waitService;
+    private final BattleService battleService;
     private final WaitUsers waitUsers;
-    private final Battles battles;
+
     @Autowired
-    public WaitController(UserService userService, WaitUsers waitUsers, Battles battles) {
+    public WaitController(UserService userService, WaitUsers waitUsers, WaitService waitService, BattleService battleService) {
         this.userService = userService;
         this.waitUsers = waitUsers;
-        this.battles = battles;
+        this.waitService = waitService;
+        this.battleService = battleService;
     }
 
     @GetMapping
@@ -55,10 +59,17 @@ public class WaitController {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
             if (bat.equals("in")) {
-                if (!waitUsers.getWaitList().containsKey(u.getLogin())) {
+                if (!waitService.isWaitListEmpty() && !waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
+                    User oppUser = waitService.getUserForBattle();
+                    req.getSession().setAttribute("battleId", battleService.createBattle(u, oppUser));
+                    resp.sendRedirect("/fs/battle/");
+                } else if (!waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
                     waitUsers.getWaitList().put(u.getLogin(), u);
+                    resp.sendRedirect("/fs/wait/");
+                } else {
+                    resp.sendRedirect("/fs/wait/");
                 }
-                resp.sendRedirect("/fs/wait/");
+
 
             }
             if (bat.equals("out")) {
