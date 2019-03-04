@@ -39,3 +39,11 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 26) create ActivePlayers map to simplify searching in battles process
 
 +++27) fill battle.jsp
+28) fix problems on battle.jsp with cards view
+
+29) create post battle method
+30) work with card from hand to table
+31) work with choose card on table
+32) work with attack
+
+33) inverse battle every time for player2
