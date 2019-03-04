@@ -42,9 +42,10 @@ public class WaitController {
                 return null;
             }
         } else {
-            resp.sendRedirect("/fs/");
-            return null;
+            req.getSession().getId();
+            resp.sendRedirect("/fs/battle/");
         }
+        return null;
     }
 
     @PostMapping
