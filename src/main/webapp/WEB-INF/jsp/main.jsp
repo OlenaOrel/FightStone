@@ -15,6 +15,7 @@
             <h2>Level : ${u.lvl} </h2>
             <h2>Points : ${u.points}</h2>
             <h2>Stars : ${u.stars}</h2>
+            <h2>WaitListSize : ${wait}</h2>
         </div>
     </nav>
 </div>

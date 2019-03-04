@@ -1,5 +1,6 @@
 package collections;
 
+import entity.Battle;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

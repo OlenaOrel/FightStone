@@ -17,7 +17,7 @@
         </form>
     </div>
     <div align="center" class="button">
-        <form action="/fs/main/" method="get">
+        <form action="/fs/wait/" method="post">
             <input type="hidden" name="bat" value="out"/>
             <input type="submit" value="Leave"/>
         </form>

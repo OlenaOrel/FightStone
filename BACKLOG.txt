@@ -30,3 +30,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 22) update post deck method to create a battle if wait list is not empty
 
+23) create exit logic
+24) create users online list with main page view
+
++++25) wait list size visible on main page (ALEX)
