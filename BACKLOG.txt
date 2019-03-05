@@ -46,4 +46,4 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 31) work with choose card on table
 32) work with attack
 
-33) inverse battle every time for player2
++++33) inverse battle every time for player2 (zhenia)

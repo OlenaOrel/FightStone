@@ -71,4 +71,36 @@ public class BattleService {
     public Battle getBattleById(Integer id) {
         return battles.getBattleList().get(id);
     }
+
+    public Battle inverse(Battle battle) {
+        User promU = battle.getPlayer1();
+        battle.setPlayer1(battle.getPlayer2());
+        battle.setPlayer2(promU);
+
+        List<Card> promDeck = battle.getDeck1();
+        battle.setDeck1(battle.getDeck2());
+        battle.setDeck2(promDeck);
+
+        List<Card> promHand = battle.getInHand1();
+        battle.setInHand1(battle.getInHand2());
+        battle.setInHand2(promHand);
+
+        List<Card> promTable = battle.getOnTable1();
+        battle.setOnTable1(battle.getOnTable2());
+        battle.setOnTable2(promTable);
+
+        battle.setMove1(false);
+
+        int promMana = battle.getMana1();
+        battle.setMana1(battle.getMana2());
+        battle.setMana2(promMana);
+
+        int promHp = battle.getHp1();
+        battle.setHp1(battle.getHp2());
+        battle.setHp2(promHp);
+
+        return battle;
+
+
+    }
 }
