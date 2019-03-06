@@ -45,18 +45,21 @@ public class BattleController {
     @PostMapping
     public void battle(HttpServletResponse resp,
                        HttpServletRequest req,
-                       @RequestParam(required = false) String table,
-                       @RequestParam(required = false) String hand,
-                       @RequestParam(required = false) String attack,
+                       @RequestParam(required = false) Integer table,
+                       @RequestParam(required = false) Integer hand,
+                       @RequestParam(required = false) Integer attack,
                        @RequestParam(required = false) String endTurn) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
+            Integer battleId = (Integer) req.getSession().getAttribute("battleId");
+            Battle b = battleService.getBattleById(battleId);
             if (endTurn != null) {
-                Integer battleId = (Integer) req.getSession().getAttribute("battleId");
-                Battle b = battleService.getBattleById(battleId);
                 battleService.processEndTurn(u.getLogin(), b);
-                resp.sendRedirect("/fs/battle/");
             }
+            if (hand != null) {
+                battleService.doPlaceCard(b, u.getLogin(), hand);
+            }
+            resp.sendRedirect("/fs/battle/");
         } else {
             resp.sendRedirect("/fs/");
         }

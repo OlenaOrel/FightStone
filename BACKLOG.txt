@@ -44,7 +44,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++29) create post battle method (lena)
 
-30) work with card from hand to table
++++30) work with card from hand to table
 31) work with choose card on table
 32) work with attack
 

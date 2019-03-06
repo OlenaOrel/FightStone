@@ -119,4 +119,37 @@ public class BattleService {
             cardService.moveRandomCard(b.getDeck2(), b.getInHand2());
         }
     }
+
+    public void moveCardById(List<Card> from, List<Card> to, Integer id) {
+        for (Card c : from) {
+            if (id.equals(c.getId())) {
+                to.add(c);
+                from.remove(c);
+                break;
+            }
+        }
+    }
+
+    public void doPlaceCard(Battle b, String login, Integer id) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            for (Card c : b.getInHand1()) {
+                if (id.equals(c.getId())) {
+                    b.getOnTable1().add(c);
+                    b.getInHand1().remove(c);
+                    b.setMana1(b.getMana1() - c.getCost());
+                    break;
+                }
+            }
+
+        } else {
+            for (Card c : b.getInHand2()) {
+                if (id.equals(c.getId())) {
+                    b.getOnTable2().add(c);
+                    b.getInHand2().remove(c);
+                    b.setMana2(b.getMana2() - c.getCost());
+                    break;
+                }
+            }
+        }
+    }
 }
