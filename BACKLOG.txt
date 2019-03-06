@@ -53,3 +53,14 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++34) work with end turn
 
 35) refactor processEndTurn method to calculate mana and isHero... in correct time
+
+36) work with hero attack process
+
+37) create finish.jsp
+
+38) create FinishController
+39) do logic to redirect to FinishController if hero is dead
+
+40) fill method to calculate users points
+
+41) create 10 new cards
