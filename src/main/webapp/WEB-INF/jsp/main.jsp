@@ -8,6 +8,11 @@
     <title>Main</title>
 </head>
 <body>
+<div align="left">
+    <form action="/fs/main/" method="post">
+        <input type="submit" value="Log out">
+    </form>
+</div>
 <div>
     <nav align='center'>
         <div>
