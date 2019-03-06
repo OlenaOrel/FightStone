@@ -94,8 +94,29 @@ public class BattleService {
         bat.setHp1(battle.getHp2());
         bat.setHp2(battle.getHp1());
 
+        bat.setId(battle.getId());
+        bat.setNumberOfMove(battle.getNumberOfMove());
+
+
         return bat;
 
 
+    }
+
+    public void processEndTurn(String userLogin, Battle b) {
+        if (b.getPlayer2().getLogin().equals(userLogin)) {
+            b.setNumberOfMove(b.getNumberOfMove() + 1);
+        }
+        b.setMove1(!b.isMove1());
+        //TODO: 35
+        b.setMana1(b.getNumberOfMove());
+        b.setMana2(b.getNumberOfMove());
+        b.setHeroPowered1(false);
+        b.setHeroPowered2(false);
+
+        if (b.getPlayer2().getLogin().equals(userLogin)) {
+            cardService.moveRandomCard(b.getDeck1(), b.getInHand1());
+            cardService.moveRandomCard(b.getDeck2(), b.getInHand2());
+        }
     }
 }

@@ -16,6 +16,7 @@
                 <h2>Level : ${b.player2.lvl} </h2>
                 <h2>Class : ${b.player2.clas}</h2>
                 <h2>HP : ${b.hp2}</h2>
+                <h2>MANA : ${b.mana2}</h2>
             </div>
         </nav>
     </div>
@@ -53,6 +54,7 @@
         <input type="submit" value="Refresh"/>
     </form>
 </c:if>
+<h3>Turn ${b.numberOfMove}</h3>
 <hr/>
 <div id="me">
     <div align='right' class="container" id="table1">
@@ -108,6 +110,7 @@
                 <h2>Level : ${b.player1.lvl} </h2>
                 <h2>Class : ${b.player1.clas}</h2>
                 <h2>HP : ${b.hp1}</h2>
+                <h2>MANA : ${b.mana1}</h2>
             </div>
         </nav>
     </div>

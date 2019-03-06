@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Battle;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +48,18 @@ public class BattleController {
                        @RequestParam(required = false) String table,
                        @RequestParam(required = false) String hand,
                        @RequestParam(required = false) String attack,
-                       @RequestParam(required = false) String endTurn) {
-
+                       @RequestParam(required = false) String endTurn) throws IOException {
+        User u = userService.getUserAttributeFromSession(req.getSession());
+        if (u != null) {
+            if (endTurn != null) {
+                Integer battleId = (Integer) req.getSession().getAttribute("battleId");
+                Battle b = battleService.getBattleById(battleId);
+                battleService.processEndTurn(u.getLogin(), b);
+                resp.sendRedirect("/fs/battle/");
+            }
+        } else {
+            resp.sendRedirect("/fs/");
+        }
     }
 }
 

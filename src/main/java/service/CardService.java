@@ -67,8 +67,12 @@ public class CardService {
 
     public List<Card> getAndRemoveTwoCardsFromTen(List<Card> tenCards) {
         List<Card> out = new LinkedList<>();
-        out.add(tenCards.remove(new Random().nextInt(10)));
-        out.add(tenCards.remove(new Random().nextInt(9)));
+        out.add(tenCards.remove(new Random().nextInt(tenCards.size())));
+        out.add(tenCards.remove(new Random().nextInt(tenCards.size())));
         return out;
+    }
+
+    public void moveRandomCard(List<Card> from, List<Card> to) {
+        to.add(from.remove(new Random().nextInt(from.size())));
     }
 }
