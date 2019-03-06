@@ -71,4 +71,31 @@ public class BattleService {
     public Battle getBattleById(Integer id) {
         return battles.getBattleList().get(id);
     }
+
+    public Battle inverse(Battle battle) {
+        Battle bat = new Battle();
+        bat.setPlayer1(battle.getPlayer2());
+        bat.setPlayer2(battle.getPlayer1());
+
+        bat.setDeck1(battle.getDeck2());
+        bat.setDeck2(battle.getDeck1());
+
+        bat.setInHand1(battle.getInHand2());
+        bat.setInHand2(battle.getInHand1());
+
+        bat.setOnTable1(battle.getOnTable2());
+        bat.setOnTable2(battle.getOnTable1());
+
+        bat.setMove1(!battle.isMove1());
+
+        bat.setMana1(battle.getMana2());
+        bat.setMana2(battle.getMana1());
+
+        bat.setHp1(battle.getHp2());
+        bat.setHp2(battle.getHp1());
+
+        return bat;
+
+
+    }
 }
