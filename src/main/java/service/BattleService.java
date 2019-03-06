@@ -73,33 +73,28 @@ public class BattleService {
     }
 
     public Battle inverse(Battle battle) {
-        User promU = battle.getPlayer1();
-        battle.setPlayer1(battle.getPlayer2());
-        battle.setPlayer2(promU);
+        Battle bat = new Battle();
+        bat.setPlayer1(battle.getPlayer2());
+        bat.setPlayer2(battle.getPlayer1());
 
-        List<Card> promDeck = battle.getDeck1();
-        battle.setDeck1(battle.getDeck2());
-        battle.setDeck2(promDeck);
+        bat.setDeck1(battle.getDeck2());
+        bat.setDeck2(battle.getDeck1());
 
-        List<Card> promHand = battle.getInHand1();
-        battle.setInHand1(battle.getInHand2());
-        battle.setInHand2(promHand);
+        bat.setInHand1(battle.getInHand2());
+        bat.setInHand2(battle.getInHand1());
 
-        List<Card> promTable = battle.getOnTable1();
-        battle.setOnTable1(battle.getOnTable2());
-        battle.setOnTable2(promTable);
+        bat.setOnTable1(battle.getOnTable2());
+        bat.setOnTable2(battle.getOnTable1());
 
-        battle.setMove1(false);
+        bat.setMove1(!battle.isMove1());
 
-        int promMana = battle.getMana1();
-        battle.setMana1(battle.getMana2());
-        battle.setMana2(promMana);
+        bat.setMana1(battle.getMana2());
+        bat.setMana2(battle.getMana1());
 
-        int promHp = battle.getHp1();
-        battle.setHp1(battle.getHp2());
-        battle.setHp2(promHp);
+        bat.setHp1(battle.getHp2());
+        bat.setHp2(battle.getHp1());
 
-        return battle;
+        return bat;
 
 
     }
