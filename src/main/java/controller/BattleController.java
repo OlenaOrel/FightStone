@@ -4,7 +4,9 @@ import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.BattleService;
 import service.UserService;
@@ -37,6 +39,16 @@ public class BattleController {
             resp.sendRedirect("/fs/");
             return null;
         }
+    }
+
+    @PostMapping
+    public void battle(HttpServletResponse resp,
+                       HttpServletRequest req,
+                       @RequestParam(required = false) String table,
+                       @RequestParam(required = false) String hand,
+                       @RequestParam(required = false) String attack,
+                       @RequestParam(required = false) String endTurn) {
+
     }
 }
 

@@ -26,7 +26,7 @@
     </div>
     <hr/>
     <div align='right' class="container" id="table2">
-        <c:forEach items="${b.inHand2}" var="i">
+        <c:forEach items="${b.onTable2}" var="i">
             <div class="item">
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
@@ -56,7 +56,7 @@
 <hr/>
 <div id="me">
     <div align='right' class="container" id="table1">
-        <c:forEach items="${b.inHand1}" var="i">
+        <c:forEach items="${b.onTable1}" var="i">
             <div class="item">
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
@@ -78,9 +78,9 @@
     </div>
     <hr/>
     <div align='left' class="container" id="deck_hand1">
-        <h2>Deck size : ${b.deck2.size()}</h2>
+        <h2>Deck size : ${b.deck1.size()}</h2>
         <h2>Hand:</h2>
-        <c:forEach items="${b.deck1}" var="i">
+        <c:forEach items="${b.inHand1}" var="i">
             <div class="item">
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>

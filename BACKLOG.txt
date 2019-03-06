@@ -31,7 +31,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++22) update post wait method to create a battle if wait list is not empty
 +++22.1) add user to battle if he is not created it
 
-23) create exit logic
++++23) create exit logic (zhenia)
 24) create users online list with main page view
 
 +++25) wait list size visible on main page (ALEX)
@@ -39,9 +39,9 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 26) create ActivePlayers map to simplify searching in battles process
 
 +++27) fill battle.jsp
-28) fix problems on battle.jsp with cards view
++++28) fix problems on battle.jsp with cards view (lena_katya)
 
-29) create post battle method
++++29) create post battle method (lena)
 30) work with card from hand to table
 31) work with choose card on table
 32) work with attack
