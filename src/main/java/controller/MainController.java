@@ -1,5 +1,6 @@
 package controller;
 
+import collections.ActivePlayers;
 import collections.UsersOnline;
 import collections.WaitUsers;
 import entity.User;
@@ -25,12 +26,14 @@ public class MainController {
     private final UserService userService;
     private final WaitUsers waitUsers;
     private final UsersOnline usersOnline;
+    private final ActivePlayers activePlayers;
     @Autowired
-    public MainController(UserService userService, CardService cardService, WaitUsers waitUsers, UsersOnline usersOnline) {
+    public MainController(UserService userService, CardService cardService, WaitUsers waitUsers, UsersOnline usersOnline, ActivePlayers activePlayers) {
         this.userService = userService;
         this.cardService = cardService;
         this.waitUsers = waitUsers;
         this.usersOnline = usersOnline;
+        this.activePlayers = activePlayers;
     }
 
     @GetMapping
@@ -43,6 +46,7 @@ public class MainController {
             model.addObject("userCards", cardService.getUserCards(u.getDeck()));
             model.addObject("wait", waitUsers.getWaitList().size());
             model.addObject("online", usersOnline.getUsersOnline().size());
+            model.addObject("active", activePlayers.getActivePlayersList().size());
             return model;
         } else {
             resp.sendRedirect("/fs/");

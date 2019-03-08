@@ -23,6 +23,7 @@
             <h2>Stars : ${u.stars}</h2>
             <h2>WaitListSize : ${wait}</h2>
             <h2>OnlineListSize : ${online}</h2>
+            <h2>InBattleListSize : ${active}</h2>
         </div>
     </nav>
 </div>

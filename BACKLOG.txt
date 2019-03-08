@@ -37,7 +37,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++25) wait list size visible on main page (ALEX)
 
-26) create ActivePlayers map to simplify searching in battles process
++++26) create ActivePlayers map to simplify searching in battles process(katya,lena)
 
 +++27) fill battle.jsp
 +++28) fix problems on battle.jsp with cards view (lena_katya)
