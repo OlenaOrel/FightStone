@@ -1,5 +1,6 @@
 package service;
 
+import collections.UsersOnline;
 import dao.UserDao;
 import entity.User;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     private UserDao udao = mock(UserDao.class);
+    private UsersOnline usersOnline = mock(UsersOnline.class);
     @Mock
     private User user;
 
@@ -25,7 +27,7 @@ public class UserServiceTest {
 
     @Test
     public void isUserExistsTestExists() {
-        UserService service = new UserService(udao);
+        UserService service = new UserService(udao, usersOnline);
         boolean result = service.isUserExists("login");
         assertTrue(result);
     }
@@ -33,14 +35,14 @@ public class UserServiceTest {
     @Test
     public void isUserExistsTestNotExists() {
         when(udao.getByLogin(anyString())).thenReturn(null);
-        UserService service = new UserService(udao);
+        UserService service = new UserService(udao, usersOnline);
         boolean result = service.isUserExists("login");
         assertFalse(result);
     }
 
     @Test
     public void getByLoginTestExists() {
-        UserService service = new UserService(udao);
+        UserService service = new UserService(udao, usersOnline);
         User result = service.getByLogin("login");
         assertNotNull(result);
     }
@@ -48,14 +50,14 @@ public class UserServiceTest {
     @Test
     public void getByLoginTestNotExists() {
         when(udao.getByLogin(anyString())).thenReturn(null);
-        UserService service = new UserService(udao);
+        UserService service = new UserService(udao, usersOnline);
         User result = service.getByLogin("login");
         assertNull(result);
     }
 
     @Test
     public void saveTest() {
-        UserService service = new UserService(udao);
+        UserService service = new UserService(udao, usersOnline);
         service.save("login", "pass");
         verify(udao, times(1)).add(any());
     }

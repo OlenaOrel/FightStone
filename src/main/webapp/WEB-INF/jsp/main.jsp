@@ -10,17 +10,19 @@
 <body>
 <div align="left">
     <form action="/fs/main/" method="post">
+        <input type="hidden" name="logout" value="${u.login}"/>
         <input type="submit" value="Log out">
     </form>
 </div>
 <div>
-    <nav align='center'>
+    <nav>
         <div>
             <h2>Login : ${u.login} </h2>
             <h2>Level : ${u.lvl} </h2>
             <h2>Points : ${u.points}</h2>
             <h2>Stars : ${u.stars}</h2>
             <h2>WaitListSize : ${wait}</h2>
+            <h2>OnlineListSize : ${online}</h2>
         </div>
     </nav>
 </div>

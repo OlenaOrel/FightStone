@@ -32,8 +32,8 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++22.1) add user to battle if he is not created it
 
 +++23) create exit logic (zhenia)
-23.1)
-24) create users online list with main page view
++++23.1)(katya,lena)
++++24) create users online list with main page view(katya,lena)
 
 +++25) wait list size visible on main page (ALEX)
 

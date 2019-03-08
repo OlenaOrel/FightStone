@@ -1,5 +1,6 @@
 package service;
 
+import collections.UsersOnline;
 import dao.UserDao;
 import entity.Card;
 import entity.User;
@@ -16,10 +17,12 @@ public class UserService {
     private static final String USER = "user";
 
     private final UserDao udao;
+    private final UsersOnline usersOnline;
 
     @Autowired
-    public UserService(UserDao udao) {
+    public UserService(UserDao udao, UsersOnline usersOnline) {
         this.udao = udao;
+        this.usersOnline = usersOnline;
     }
 
     public boolean isUserExists(String login) {
@@ -56,5 +59,13 @@ public class UserService {
 
     public void removeExistsCards(List<Card> allCards, List<Card> userCards) {
         allCards.removeAll(userCards);
+    }
+
+    public void addUsersOnline(User u) {
+        usersOnline.getUsersOnline().put(u.getLogin(), u);
+    }
+
+    public void removeUserFromSession(String login) {
+        usersOnline.getUsersOnline().remove(login);
     }
 }
