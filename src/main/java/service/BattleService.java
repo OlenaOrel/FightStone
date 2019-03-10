@@ -158,7 +158,6 @@ public class BattleService {
                     b.getOnTable1().add(c);
                     b.getInHand1().remove(c);
                     b.setMana1(b.getMana1() - c.getCost());
-                    c.setCardCanMoove(false);
                     break;
                 }
             }
@@ -168,7 +167,6 @@ public class BattleService {
                     b.getOnTable2().add(c);
                     b.getInHand2().remove(c);
                     b.setMana2(b.getMana2() - c.getCost());
-                    c.setCardCanMoove(false);
                     break;
                 }
             }
@@ -211,6 +209,35 @@ public class BattleService {
         }
     }
 
+    public void doAttackCard(Battle b, String login, Integer id) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            Card defender = cardService.chooseCardFromListById(b.getOnTable2(), id);
+            Card attacker = cardService.chooseCardFromListById(b.getOnTable1(), b.getFromTableChoosen());
+            defender.setArmor(defender.getArmor() - attacker.getDamage());
+            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            if (defender.getArmor() <= 0) {
+                b.getOnTable2().remove(defender);
+            }
+            if (attacker.getArmor() <= 0) {
+                b.getOnTable1().remove(attacker);
+            }
+            b.setFromTableChoosen(null);
+            attacker.setCardCanMoove(false);
+        } else {
+            Card defender = cardService.chooseCardFromListById(b.getOnTable1(), id);
+            Card attacker = cardService.chooseCardFromListById(b.getOnTable2(), b.getFromTableChoosen());
+            defender.setArmor(defender.getArmor() - attacker.getDamage());
+            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            if (defender.getArmor() <= 0) {
+                b.getOnTable1().remove(defender);
+            }
+            if (attacker.getArmor() <= 0) {
+                b.getOnTable2().remove(attacker);
+            }
+            b.setFromTableChoosen(null);
+            attacker.setCardCanMoove(false);
+        }
+    }
     public void addActivePlayer(User u1, User u2, int battleId) {
         activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
         activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);
