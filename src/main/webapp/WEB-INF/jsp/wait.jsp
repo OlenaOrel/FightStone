@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="block">
-    <div align="center" class="button">
+    <div align="center">
         <form action="/fs/wait/" method="post">
             <input type="hidden" name="bat" value="in"/>
             <input type="submit" value="Refresh"/>

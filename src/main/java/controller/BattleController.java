@@ -48,7 +48,8 @@ public class BattleController {
                        @RequestParam(required = false) Integer table,
                        @RequestParam(required = false) Integer hand,
                        @RequestParam(required = false) Integer attack,
-                       @RequestParam(required = false) String endTurn) throws IOException {
+                       @RequestParam(required = false) String endTurn,
+                       @RequestParam(required = false) String power) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
@@ -58,6 +59,9 @@ public class BattleController {
             }
             if (hand != null) {
                 battleService.doPlaceCard(b, u.getLogin(), hand);
+            }
+            if (power != null) {
+                battleService.doHeroPower(b, u.getLogin());
             }
             if (table != null) {
                 if (table < 0) {

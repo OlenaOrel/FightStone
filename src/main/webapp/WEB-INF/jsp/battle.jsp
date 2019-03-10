@@ -81,6 +81,12 @@
     <hr/>
     <div align='left' class="container" id="deck_hand1">
         <h2>Deck size : ${b.deck1.size()}</h2>
+        <c:if test="${b.mana1>=2 && !b.heroPowered1}">
+            <form action="/fs/battle" method="post" class="power">
+                <input type="hidden" name="power" value="true"/>
+                <input type="submit" value="Use Power"/>
+            </form>
+        </c:if>
         <h2>Hand:</h2>
         <c:forEach items="${b.inHand1}" var="i">
             <div class="item">
