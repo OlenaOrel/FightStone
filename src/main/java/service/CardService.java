@@ -23,7 +23,7 @@ public class CardService {
         this.cardDao = cardDao;
     }
 
-    public Card getById(int id){
+    public Card getById(int id) {
         return cardDao.getById(id);
     }
 
@@ -73,6 +73,19 @@ public class CardService {
     }
 
     public void moveRandomCard(List<Card> from, List<Card> to) {
-        to.add(from.remove(new Random().nextInt(from.size())));
+        if (from.size() > 0) {
+            to.add(from.remove(new Random().nextInt(from.size())));
+        }
     }
+
+    public Card chooseCardFromListById(List<Card> list, Integer id) {
+        for (Card c : list) {
+            if (id.equals(c.getId())) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+
 }

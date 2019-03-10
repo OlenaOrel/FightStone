@@ -32,7 +32,7 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${b.fromTableChoosen1 != 0}">
+                <c:if test="${b.fromTableChoosen != null}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="attack" value="${i.id}"/>
                         <input type="submit" value="Attack"/>
@@ -43,7 +43,7 @@
     </div>
 </div>
 <hr/>
-<c:if test="${b.move1}">
+<c:if test="${b.move1 && b.fromHandChoosen == null && b.fromTableChoosen == null}">
     <form action="/fs/battle" method="post">
         <input type="hidden" name="endTurn" value="true"/>
         <input type="submit" value="End Turn"/>
@@ -63,15 +63,15 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${i.cardCanMoove && b.fromHandChoosen1 == 0 && b.fromTableChoosen1 == 0}">
+                <c:if test="${b.move1 && i.damage>0 && i.cardCanMoove && b.fromHandChoosen == null && b.fromTableChoosen == null}">
                     <form action="/fs/battle" method="post">
-                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="hidden" name="table" value="${i.id}"/>
                         <input type="submit" value="Choose"/>
                     </form>
                 </c:if>
-                <c:if test="${b.fromTableChoosen1 == i.id}">
+                <c:if test="${b.fromTableChoosen == i.id}">
                     <form action="/fs/battle" method="post">
-                        <input type="hidden" name="hand" value="${i.id}"/>
+                        <input type="hidden" name="table" value="${-i.id}"/>
                         <input type="submit" value="Unchoose"/>
                     </form>
                 </c:if>
@@ -93,13 +93,13 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${i.cost <= b.mana1 && b.fromHandChoosen1 == 0 && b.fromTableChoosen1 == 0}">
+                <c:if test="${b.move1 && i.cost <= b.mana1 && b.fromHandChoosen == null && b.fromTableChoosen == null}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="hand" value="${i.id}"/>
                         <input type="submit" value="Choose"/>
                     </form>
                 </c:if>
-                <c:if test="${b.fromHandChoosen1 == i.id}">
+                <c:if test="${b.fromHandChoosen == i.id}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="hand" value="${i.id}"/>
                         <input type="submit" value="Unchoose"/>
