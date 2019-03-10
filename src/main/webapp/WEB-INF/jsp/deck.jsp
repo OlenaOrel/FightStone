@@ -33,8 +33,8 @@
         }
 
         .item img {
-            width: 100px;
-            height: 100px;
+            width: 40px;
+            height: 40px;
         }
     </style>
 </head>

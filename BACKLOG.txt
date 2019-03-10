@@ -52,7 +52,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++34) work with end turn
 
-35) refactor processEndTurn method to calculate mana and isHero... in correct time
++++35) refactor processEndTurn method to calculate mana and isHero... in correct time(lena,katya)
 
 36) work with hero attack process
 

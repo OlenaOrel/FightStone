@@ -122,11 +122,12 @@ public class BattleService {
     public void processEndTurn(String userLogin, Battle b) {
         if (b.getPlayer2().getLogin().equals(userLogin)) {
             b.setNumberOfMove(b.getNumberOfMove() + 1);
+            b.setMana1(b.getNumberOfMove());
         }
         b.setMove1(!b.isMove1());
-        //TODO: 35
-        b.setMana1(b.getNumberOfMove());
-        b.setMana2(b.getNumberOfMove());
+        if (!b.isMove1()) {
+            b.setMana2(b.getNumberOfMove());
+        }
         b.setHeroPowered1(false);
         b.setHeroPowered2(false);
 
@@ -172,5 +173,15 @@ public class BattleService {
     public void addActivePlayer(User u1, User u2, int battleId) {
         activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
         activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);
+    }
+
+    public void doHeroPower(Battle b, String login) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            b.setMana1(b.getMana1() - 2);
+            b.setHeroPowered1(true);
+        } else {
+            b.setMana2(b.getMana2() - 2);
+            b.setHeroPowered2(true);
+        }
     }
 }
