@@ -45,7 +45,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 +++29) create post battle method (lena)
 
 +++30) work with card from hand to table
-31) work with choose card on table
++++31) work with choose card on table(pili_tema)
 32) work with attack
 
 +++33) inverse battle every time for player2 (zhenia)
