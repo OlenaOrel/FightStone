@@ -39,6 +39,7 @@ public class LoginController {
         User u = userService.getByLogin(login);
         if(u != null && u.getPass().equals(pass)){
             userService.setUserAttributeToSession(req.getSession(), u);
+            userService.addUsersOnline(u);
             resp.sendRedirect("/fs/main/");
         }else{
             resp.sendRedirect("/fs/");

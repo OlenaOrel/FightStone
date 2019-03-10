@@ -62,10 +62,12 @@ public class WaitController {
             if (bat.equals("in")) {
                 if (!waitService.isWaitListEmpty() && !waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
                     User oppUser = waitService.getUserForBattle();
-                    req.getSession().setAttribute("battleId", battleService.createBattle(u, oppUser));
+                    int battleId = battleService.createBattle(u, oppUser);
+                    req.getSession().setAttribute("battleId", battleId);
+                    battleService.addActivePlayer(u, oppUser, battleId);
                     resp.sendRedirect("/fs/battle/");
                 } else {
-                    Battle b = battleService.isUserInBattle(u.getLogin());
+                    Battle b = battleService.getBattleById(battleService.isUserInBattle2(u.getLogin()));
                     if (b != null) {
                         req.getSession().setAttribute("battleId", b.getId());
                         resp.sendRedirect("/fs/battle/");

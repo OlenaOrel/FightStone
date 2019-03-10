@@ -1,5 +1,6 @@
 package service;
 
+import collections.ActivePlayers;
 import collections.Battles;
 import entity.Battle;
 import entity.Card;
@@ -16,11 +17,12 @@ public class BattleService {
 
     private final CardService cardService;
     private final Battles battles;
-
+    private final ActivePlayers activePlayers;
     @Autowired
-    public BattleService(CardService cardService, Battles battles) {
+    public BattleService(CardService cardService, Battles battles, ActivePlayers activePlayers) {
         this.cardService = cardService;
         this.battles = battles;
+        this.activePlayers = activePlayers;
     }
 
     public int createBattle(User player1, User player2) {
@@ -53,6 +55,7 @@ public class BattleService {
         return b.getId();
     }
 
+    @Deprecated
     public Battle isUserInBattle(String login) {
         for (Battle b : battles.getBattleList().values()) {
             if (b.getPlayer1().getLogin().equals(login) ||
@@ -63,8 +66,21 @@ public class BattleService {
         return null;
     }
 
+    public Integer isUserInBattle2(String login) {
+        for (String l : activePlayers.getActivePlayersList().keySet()) {
+            if (l.equals(login)) {
+                return activePlayers.getActivePlayersList().get(login);
+            }
+        }
+        return null;
+    }
+
+
     public Battle getBattleById(Integer id) {
-        return battles.getBattleList().get(id);
+        if (id != null) {
+            return battles.getBattleList().get(id);
+        }
+        return null;
     }
 
     public Battle inverse(Battle battle) {
@@ -221,5 +237,9 @@ public class BattleService {
             b.setFromTableChoosen(null);
             attacker.setCardCanMoove(false);
         }
+    }
+    public void addActivePlayer(User u1, User u2, int battleId) {
+        activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
+        activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);
     }
 }
