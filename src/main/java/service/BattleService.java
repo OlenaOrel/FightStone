@@ -50,11 +50,6 @@ public class BattleService {
 
         b.setHeroPowered1(false);
         b.setHeroPowered2(false);
-
-        b.setFromHandChoosen1(0);
-
-        b.setFromTableChoosen1(0);
-
         battles.getBattleList().put(b.getId(), b);
 
         return b.getId();
@@ -113,6 +108,9 @@ public class BattleService {
         bat.setId(battle.getId());
         bat.setNumberOfMove(battle.getNumberOfMove());
 
+        bat.setFromTableChoosen(battle.getFromTableChoosen());
+        bat.setFromHandChoosen(battle.getFromHandChoosen());
+
 
         return bat;
 
@@ -135,6 +133,13 @@ public class BattleService {
             cardService.moveRandomCard(b.getDeck1(), b.getInHand1());
             cardService.moveRandomCard(b.getDeck2(), b.getInHand2());
         }
+        for (Card c : b.getOnTable1()) {
+            c.setCardCanMoove(true);
+        }
+        for (Card c : b.getOnTable2()) {
+            c.setCardCanMoove(true);
+        }
+
     }
 
     public void moveCardById(List<Card> from, List<Card> to, Integer id) {
@@ -157,7 +162,6 @@ public class BattleService {
                     break;
                 }
             }
-
         } else {
             for (Card c : b.getInHand2()) {
                 if (id.equals(c.getId())) {
@@ -170,6 +174,71 @@ public class BattleService {
         }
     }
 
+    public void doChooseOnTableLogic(Battle b, String login, Integer id) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            for (Card c : b.getOnTable1()) {
+                if (id.equals(c.getId())) {
+                    b.setFromTableChoosen(id);
+                    break;
+                }
+            }
+        } else {
+            for (Card c : b.getOnTable2()) {
+                if (id.equals(c.getId())) {
+                    b.setFromTableChoosen(id);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void doUnchooseOnTableLogic(Battle b, String login, Integer id) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            for (Card c : b.getOnTable1()) {
+                if (id.equals(-c.getId())) {
+                    b.setFromTableChoosen(null);
+                    break;
+                }
+            }
+        } else {
+            for (Card c : b.getOnTable2()) {
+                if (id.equals(-c.getId())) {
+                    b.setFromTableChoosen(null);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void doAttackCard(Battle b, String login, Integer id) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            Card defender = cardService.chooseCardFromListById(b.getOnTable2(), id);
+            Card attacker = cardService.chooseCardFromListById(b.getOnTable1(), b.getFromTableChoosen());
+            defender.setArmor(defender.getArmor() - attacker.getDamage());
+            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            if (defender.getArmor() <= 0) {
+                b.getOnTable2().remove(defender);
+            }
+            if (attacker.getArmor() <= 0) {
+                b.getOnTable1().remove(attacker);
+            }
+            b.setFromTableChoosen(null);
+            attacker.setCardCanMoove(false);
+        } else {
+            Card defender = cardService.chooseCardFromListById(b.getOnTable1(), id);
+            Card attacker = cardService.chooseCardFromListById(b.getOnTable2(), b.getFromTableChoosen());
+            defender.setArmor(defender.getArmor() - attacker.getDamage());
+            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            if (defender.getArmor() <= 0) {
+                b.getOnTable1().remove(defender);
+            }
+            if (attacker.getArmor() <= 0) {
+                b.getOnTable2().remove(attacker);
+            }
+            b.setFromTableChoosen(null);
+            attacker.setCardCanMoove(false);
+        }
+    }
     public void addActivePlayer(User u1, User u2, int battleId) {
         activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
         activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);

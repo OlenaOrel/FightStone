@@ -67,6 +67,15 @@ public class BattleController {
             if (attackHero != null) {
                 battleService.doAttackHero(b, u.getLogin());
             }
+            if (table != null) {
+                if (table < 0) {
+                    battleService.doUnchooseOnTableLogic(b, u.getLogin(), table);
+                }
+                battleService.doChooseOnTableLogic(b, u.getLogin(), table);
+            }
+            if (attack != null) {
+                battleService.doAttackCard(b, u.getLogin(), attack);
+            }
             resp.sendRedirect("/fs/battle/");
         } else {
             resp.sendRedirect("/fs/");

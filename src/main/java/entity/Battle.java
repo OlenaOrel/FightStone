@@ -29,8 +29,8 @@ public class Battle {
     private boolean isHeroPowered1;
     private boolean isHeroPowered2;
 
-    private int fromHandChoosen1;
-    private int fromTableChoosen1;
+    private Integer fromHandChoosen;
+    private Integer fromTableChoosen;
 
     public Battle() {
     }
@@ -171,19 +171,19 @@ public class Battle {
         isHeroPowered2 = heroPowered2;
     }
 
-    public int getFromHandChoosen1() {
-        return fromHandChoosen1;
+    public Integer getFromHandChoosen() {
+        return fromHandChoosen;
     }
 
-    public void setFromHandChoosen1(int fromHandChoosen1) {
-        fromHandChoosen1 = fromHandChoosen1;
+    public void setFromHandChoosen(Integer fromHandChoosen) {
+        this.fromHandChoosen = fromHandChoosen;
     }
 
-    public int getFromTableChoosen1() {
-        return fromTableChoosen1;
+    public Integer getFromTableChoosen() {
+        return fromTableChoosen;
     }
 
-    public void setFromTableChoosen1(int fromTableChoosen1) {
-        fromTableChoosen1 = fromTableChoosen1;
+    public void setFromTableChoosen(Integer fromTableChoosen) {
+        this.fromTableChoosen = fromTableChoosen;
     }
 }
