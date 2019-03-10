@@ -184,4 +184,14 @@ public class BattleService {
             b.setHeroPowered2(true);
         }
     }
+
+    public void doAttackHero(Battle b, String login) {
+        if (b.getPlayer1().getLogin().equals(login)) {
+            b.setHp2(b.getHp2() - 2);
+            b.setHeroPowered1(false);
+        } else {
+            b.setHp1(b.getHp1() - 2);
+            b.setHeroPowered2(false);
+        }
+    }
 }
