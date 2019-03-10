@@ -54,7 +54,7 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++35) refactor processEndTurn method to calculate mana and isHero... in correct time(lena,katya)
 
-36) work with hero attack process
++++36) work with hero attack process(lena,katya)
 
 37) create finish.jsp
 

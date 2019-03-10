@@ -16,6 +16,12 @@
                 <h2>Level : ${b.player2.lvl} </h2>
                 <h2>Class : ${b.player2.clas}</h2>
                 <h2>HP : ${b.hp2}</h2>
+                <c:if test="${b.heroPowered1}">
+                    <form action="/fs/battle" method="post" class="power">
+                        <input type="hidden" name="attackHero" value="true"/>
+                        <input type="submit" value="Attack Hero"/>
+                    </form>
+                </c:if>
                 <h2>MANA : ${b.mana2}</h2>
             </div>
         </nav>
