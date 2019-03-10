@@ -63,7 +63,7 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${b.move1 && i.cardCanMoove && b.fromHandChoosen == null && b.fromTableChoosen == null}">
+                <c:if test="${b.move1 && i.damage>0 && i.cardCanMoove && b.fromHandChoosen == null && b.fromTableChoosen == null}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="table" value="${i.id}"/>
                         <input type="submit" value="Choose"/>
