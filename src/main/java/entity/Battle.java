@@ -29,6 +29,8 @@ public class Battle {
     private boolean isHeroPowered1;
     private boolean isHeroPowered2;
 
+    private boolean IsHeroUsePower;
+
     private Integer fromHandChoosen;
     private Integer fromTableChoosen;
 
@@ -185,5 +187,13 @@ public class Battle {
 
     public void setFromTableChoosen(Integer fromTableChoosen) {
         this.fromTableChoosen = fromTableChoosen;
+    }
+
+    public boolean isHeroUsePower() {
+        return IsHeroUsePower;
+    }
+
+    public void setHeroUsePower(boolean heroUsePower) {
+        IsHeroUsePower = heroUsePower;
     }
 }

@@ -16,7 +16,7 @@
                 <h2>Level : ${b.player2.lvl} </h2>
                 <h2>Class : ${b.player2.clas}</h2>
                 <h2>HP : ${b.hp2}</h2>
-                <c:if test="${b.heroPowered1}">
+                <c:if test="${b.heroUsePower||b.fromTableChoosen != null}">
                     <form action="/fs/battle" method="post" class="power">
                         <input type="hidden" name="attackHero" value="true"/>
                         <input type="submit" value="Attack Hero"/>
@@ -38,7 +38,7 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${b.fromTableChoosen != null}">
+                <c:if test="${b.fromTableChoosen != null||b.heroUsePower}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="attack" value="${i.id}"/>
                         <input type="submit" value="Attack"/>
@@ -49,7 +49,7 @@
     </div>
 </div>
 <hr/>
-<c:if test="${b.move1 && b.fromHandChoosen == null && b.fromTableChoosen == null}">
+<c:if test="${b.move1 && b.fromHandChoosen == null && b.fromTableChoosen == null && !b.heroUsePower}">
     <form action="/fs/battle" method="post">
         <input type="hidden" name="endTurn" value="true"/>
         <input type="submit" value="End Turn"/>
@@ -69,7 +69,7 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${b.move1 && i.damage>0 && i.cardCanMoove && b.fromHandChoosen == null && b.fromTableChoosen == null}">
+                <c:if test="${b.move1 && (i.damage>0 && i.cardCanMoove && b.fromHandChoosen == null && b.fromTableChoosen == null) && !b.heroUsePower}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="table" value="${i.id}"/>
                         <input type="submit" value="Choose"/>
@@ -87,7 +87,7 @@
     <hr/>
     <div align='left' class="container" id="deck_hand1">
         <h2>Deck size : ${b.deck1.size()}</h2>
-        <c:if test="${b.mana1>=2 && !b.heroPowered1}">
+        <c:if test="${b.move1 && b.mana1>=2 && !b.heroPowered1 && b.fromHandChoosen == null && b.fromTableChoosen == null}">
             <form action="/fs/battle" method="post" class="power">
                 <input type="hidden" name="power" value="true"/>
                 <input type="submit" value="Use Power"/>
@@ -99,7 +99,7 @@
                 <h3>${i.name} Cost:${i.cost}</h3>
                 <img src='${i.pic}' alt='card'/>
                 <h3>${i.damage} ${i.armor}</h3>
-                <c:if test="${b.move1 && i.cost <= b.mana1 && b.fromHandChoosen == null && b.fromTableChoosen == null}">
+                <c:if test="${b.move1 && i.cost <= b.mana1 && b.fromHandChoosen == null && b.fromTableChoosen == null && !b.heroUsePower}">
                     <form action="/fs/battle" method="post">
                         <input type="hidden" name="hand" value="${i.id}"/>
                         <input type="submit" value="Choose"/>

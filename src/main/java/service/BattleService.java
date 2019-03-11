@@ -18,6 +18,7 @@ public class BattleService {
     private final CardService cardService;
     private final Battles battles;
     private final ActivePlayers activePlayers;
+
     @Autowired
     public BattleService(CardService cardService, Battles battles, ActivePlayers activePlayers) {
         this.cardService = cardService;
@@ -50,21 +51,22 @@ public class BattleService {
 
         b.setHeroPowered1(false);
         b.setHeroPowered2(false);
+        b.setHeroUsePower(false);
         battles.getBattleList().put(b.getId(), b);
 
         return b.getId();
     }
 
-    @Deprecated
-    public Battle isUserInBattle(String login) {
-        for (Battle b : battles.getBattleList().values()) {
-            if (b.getPlayer1().getLogin().equals(login) ||
-                    b.getPlayer2().getLogin().equals(login)) {
-                return b;
-            }
-        }
-        return null;
-    }
+//    @Deprecated
+//    public Battle isUserInBattle(String login) {
+//        for (Battle b : battles.getBattleList().values()) {
+//            if (b.getPlayer1().getLogin().equals(login) ||
+//                    b.getPlayer2().getLogin().equals(login)) {
+//                return b;
+//            }
+//        }
+//        return null;
+//    }
 
     public Integer isUserInBattle2(String login) {
         for (String l : activePlayers.getActivePlayersList().keySet()) {
@@ -110,7 +112,9 @@ public class BattleService {
 
         bat.setFromTableChoosen(battle.getFromTableChoosen());
         bat.setFromHandChoosen(battle.getFromHandChoosen());
-
+        bat.setHeroPowered1(battle.isHeroPowered2());
+        bat.setHeroPowered2(battle.isHeroPowered1());
+        bat.setHeroUsePower(battle.isHeroUsePower());
 
         return bat;
 
@@ -128,6 +132,9 @@ public class BattleService {
         }
         b.setHeroPowered1(false);
         b.setHeroPowered2(false);
+        b.setHeroUsePower(false);
+        b.setFromHandChoosen(null);
+        b.setFromHandChoosen(null);
 
         if (b.getPlayer2().getLogin().equals(userLogin)) {
             cardService.moveRandomCard(b.getDeck1(), b.getInHand1());
@@ -213,38 +220,54 @@ public class BattleService {
     public void doAttackCard(Battle b, String login, Integer id) {
         if (b.getPlayer1().getLogin().equals(login)) {
             Card defender = cardService.chooseCardFromListById(b.getOnTable2(), id);
-            Card attacker = cardService.chooseCardFromListById(b.getOnTable1(), b.getFromTableChoosen());
-            defender.setArmor(defender.getArmor() - attacker.getDamage());
-            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            //Hero attack
+            if (b.isHeroUsePower()) {
+                defender.setArmor(defender.getArmor() - 1);
+                b.setHeroUsePower(false);
+            } else {
+                Card attacker = cardService.chooseCardFromListById(b.getOnTable1(), b.getFromTableChoosen());
+                //Card attack
+                defender.setArmor(defender.getArmor() - attacker.getDamage());
+                attacker.setArmor(attacker.getArmor() - defender.getDamage());
+                if (attacker.getArmor() <= 0) {
+                    b.getOnTable1().remove(attacker);
+                }
+                b.setFromTableChoosen(null);
+                attacker.setCardCanMoove(false);
+            }
             if (defender.getArmor() <= 0) {
                 b.getOnTable2().remove(defender);
             }
-            if (attacker.getArmor() <= 0) {
-                b.getOnTable1().remove(attacker);
-            }
-            b.setFromTableChoosen(null);
-            attacker.setCardCanMoove(false);
         } else {
             Card defender = cardService.chooseCardFromListById(b.getOnTable1(), id);
-            Card attacker = cardService.chooseCardFromListById(b.getOnTable2(), b.getFromTableChoosen());
-            defender.setArmor(defender.getArmor() - attacker.getDamage());
-            attacker.setArmor(attacker.getArmor() - defender.getDamage());
+            //Hero attack
+            if (b.isHeroUsePower()) {
+                defender.setArmor(defender.getArmor() - 1);
+                b.setHeroUsePower(false);
+            } else {
+                //Card attack
+                Card attacker = cardService.chooseCardFromListById(b.getOnTable2(), b.getFromTableChoosen());
+                defender.setArmor(defender.getArmor() - attacker.getDamage());
+                attacker.setArmor(attacker.getArmor() - defender.getDamage());
+                if (attacker.getArmor() <= 0) {
+                    b.getOnTable2().remove(attacker);
+                }
+                b.setFromTableChoosen(null);
+                attacker.setCardCanMoove(false);
+            }
             if (defender.getArmor() <= 0) {
                 b.getOnTable1().remove(defender);
             }
-            if (attacker.getArmor() <= 0) {
-                b.getOnTable2().remove(attacker);
-            }
-            b.setFromTableChoosen(null);
-            attacker.setCardCanMoove(false);
         }
     }
+
     public void addActivePlayer(User u1, User u2, int battleId) {
         activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
         activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);
     }
 
     public void doHeroPower(Battle b, String login) {
+        b.setHeroUsePower(true);
         if (b.getPlayer1().getLogin().equals(login)) {
             b.setMana1(b.getMana1() - 2);
             b.setHeroPowered1(true);
@@ -252,15 +275,36 @@ public class BattleService {
             b.setMana2(b.getMana2() - 2);
             b.setHeroPowered2(true);
         }
+//        b.setHeroUsePower(false);
     }
 
     public void doAttackHero(Battle b, String login) {
         if (b.getPlayer1().getLogin().equals(login)) {
-            b.setHp2(b.getHp2() - 2);
-            b.setHeroPowered1(false);
+            //Hero attack
+            if (b.isHeroUsePower()) {
+                b.setHp2(b.getHp2() - 1);
+                b.setHeroUsePower(false);
+            } else {
+                //Card attack
+                Card attacker = cardService.chooseCardFromListById(b.getOnTable1(), b.getFromTableChoosen());
+                b.setHp2(b.getHp2() - attacker.getDamage());
+                b.setFromTableChoosen(null);
+                attacker.setCardCanMoove(false);
+//            b.setHeroPowered1(false);
+            }
         } else {
-            b.setHp1(b.getHp1() - 2);
-            b.setHeroPowered2(false);
+            //Hero attack
+            if (b.isHeroUsePower()) {
+                b.setHp1(b.getHp1() - 1);
+                b.setHeroUsePower(false);
+            } else {
+                //Card attack
+                Card attacker = cardService.chooseCardFromListById(b.getOnTable2(), b.getFromTableChoosen());
+                b.setHp1(b.getHp1() - attacker.getDamage());
+                b.setFromTableChoosen(null);
+                attacker.setCardCanMoove(false);
+//            b.setHeroPowered2(false);
+            }
         }
     }
 }

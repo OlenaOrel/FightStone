@@ -32,9 +32,11 @@ public class BattleController {
     public ModelAndView battleView(HttpServletRequest req,
                                    HttpServletResponse resp) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer1())) {
+//        if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer1())) {
+        if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer1())) {
             return new ModelAndView("battle", "b", battleService.getBattleById((Integer) req.getSession().getAttribute("battleId")));
-        } else if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer2())) {
+//        } else if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer2())) {
+        } else if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer2())) {
             return new ModelAndView("battle", "b", battleService.inverse(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId"))));
         } else {
             resp.sendRedirect("/fs/");
