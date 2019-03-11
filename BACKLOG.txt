@@ -56,10 +56,10 @@ YOU NEED TO CREATE TESTS TO EVERY CONTROLLER AND SERVICE!!!
 
 +++36) work with hero attack process(lena,katya)
 
-37) create finish.jsp
++++37) create finish.jsp(pili_tema)
 
-38) create FinishController
-39) do logic to redirect to FinishController if hero is dead
++++38) create FinishController(pili_tema)
++++39) do logic to redirect to FinishController if hero is dead(pili_tema)
 
 40) fill method to calculate users points
 

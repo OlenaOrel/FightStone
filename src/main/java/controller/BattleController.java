@@ -78,7 +78,14 @@ public class BattleController {
             if (attack != null) {
                 battleService.doAttackCard(b, u.getLogin(), attack);
             }
-            resp.sendRedirect("/fs/battle/");
+
+            if (battleService.isSomeHeroDead(b)) {
+                battleService.processEndTurn(u.getLogin(), b);
+                req.getSession().setAttribute("battleId", b.getId());
+                resp.sendRedirect("/fs/finish/");
+            } else {
+                resp.sendRedirect("/fs/battle/");
+            }
         } else {
             resp.sendRedirect("/fs/");
         }

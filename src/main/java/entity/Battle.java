@@ -34,6 +34,9 @@ public class Battle {
     private Integer fromHandChoosen;
     private Integer fromTableChoosen;
 
+    private int battlePointsPlayer1;
+    private int battlePointsPlayer2;
+
     public Battle() {
     }
 
@@ -195,5 +198,21 @@ public class Battle {
 
     public void setHeroUsePower(boolean heroUsePower) {
         IsHeroUsePower = heroUsePower;
+    }
+
+    public int getBattlePointsPlayer1() {
+        return battlePointsPlayer1;
+    }
+
+    public void setBattlePointsPlayer1(int battlePointsPlayer1) {
+        this.battlePointsPlayer1 = battlePointsPlayer1;
+    }
+
+    public int getBattlePointsPlayer2() {
+        return battlePointsPlayer2;
+    }
+
+    public void setBattlePointsPlayer2(int battlePointsPlayer2) {
+        this.battlePointsPlayer2 = battlePointsPlayer2;
     }
 }
