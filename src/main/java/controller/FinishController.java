@@ -56,7 +56,7 @@ public class FinishController {
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
             Battle b = battleService.getBattleById(battleId);
             if (exit != null) {
-
+                finishService.deleteBattle((Integer) req.getSession().getAttribute("battleId"));
                 resp.sendRedirect("/fs/main/");
             }
         } else {
