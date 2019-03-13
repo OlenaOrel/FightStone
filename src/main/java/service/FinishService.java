@@ -19,11 +19,11 @@ public class FinishService {
         User u1 = b.getPlayer1();
         User u2 = b.getPlayer2();
         if (b.getHp1() <= 0) {
-            u1.setPoints(u1.getPoints() + b.getBattlePointsPlayer1() / 2);
+            u1.setPoints(u1.getPoints() + (b.getBattlePointsPlayer1() / 2));
             if (u1.getStars() == 0 && u1.getLvl() > 0) {
                 u1.setLvl(u1.getLvl() - 1);
-                u1.setStars(5);
-            } else if (u1.getLvl() > 0) {
+                u1.setStars(4);
+            } else if (u1.getLvl() > 0 && u1.getStars() > 0) {
                 u1.setStars(u1.getStars() - 1);
             }
             u2.setPoints(b.getBattlePointsPlayer2());
@@ -36,8 +36,8 @@ public class FinishService {
             u2.setPoints(u2.getPoints() + b.getBattlePointsPlayer2() / 2);
             if (u2.getStars() == 0 && u2.getLvl() > 0) {
                 u2.setLvl(u2.getLvl() - 1);
-                u2.setStars(5);
-            } else if (u2.getLvl() > 0) {
+                u2.setStars(4);
+            } else if (u2.getStars() > 0 && u2.getLvl() > 0) {
                 u2.setStars(u2.getStars() - 1);
             }
             u1.setPoints(b.getBattlePointsPlayer1());
