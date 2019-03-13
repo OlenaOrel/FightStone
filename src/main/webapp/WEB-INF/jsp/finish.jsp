@@ -15,8 +15,8 @@
                 <h2>Login : ${b.player2.login} </h2>
                 <h2>Level : ${b.player2.lvl} </h2>
                 <h2>Class : ${b.player2.clas}</h2>
-                <h2>HP : ${b.hp2}</h2>
-                <h2>MANA : ${b.mana2}</h2>
+                <h2>Stars : ${b.player2.stars}</h2>
+                <h2>Points : ${b.player2.points}</h2>
             </div>
         </nav>
     </div>
@@ -49,8 +49,8 @@
             <h2>Login : ${b.player1.login} </h2>
             <h2>Level : ${b.player1.lvl} </h2>
             <h2>Class : ${b.player1.clas}</h2>
-            <h2>HP : ${b.hp1}</h2>
-            <h2>MANA : ${b.mana1}</h2>
+            <h2>Stars : ${b.player1.stars}</h2>
+            <h2>Points : ${b.player1.points}</h2>
         </div>
     </nav>
 </div>

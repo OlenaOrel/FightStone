@@ -37,9 +37,9 @@ public class FinishController {
                                    HttpServletResponse resp) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer1())) {
-            return new ModelAndView("finish", "b", battleService.getBattleById((Integer) req.getSession().getAttribute("battleId")));
+            return new ModelAndView("finish", "b", finishService.calculatePoints(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId"))));
         } else if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer2())) {
-            return new ModelAndView("finish", "b", battleService.inverse(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId"))));
+            return new ModelAndView("finish", "b", finishService.calculatePoints(battleService.inverse(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId")))));
         } else {
             resp.sendRedirect("/fs/");
             return null;
@@ -56,6 +56,7 @@ public class FinishController {
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
             Battle b = battleService.getBattleById(battleId);
             if (exit != null) {
+                finishService.deleteBattle((Integer) req.getSession().getAttribute("battleId"));
                 resp.sendRedirect("/fs/main/");
             }
         } else {
