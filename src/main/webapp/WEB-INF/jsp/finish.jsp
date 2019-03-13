@@ -25,20 +25,19 @@
     <h2>You earned ${b.battlePointsPlayer2} points</h2>
 </div>
 <hr/>
+<div align='center' class="topnav">
 <c:if test="${b.hp1<=0}">
     ${b.player2.login} WIN!
-    <form action="/fs/finish" method="post">
-        <input type="hidden" name="exit" value="true"/>
-        <input type="submit" value="Exit"/>
-    </form>
 </c:if>
+</div>
+<form action="/fs/main" method="get">
+    <input type="submit" value="Exit"/>
+</form>
+    <div align='center' class="topnav">
 <c:if test="${b.hp2<=0}">
     ${b.player1.login} WIN!
-    <form action="/fs/finish" method="get">
-        <input type="hidden" name="exit" value="true"/>
-        <input type="submit" value="Exit"/>
-    </form>
 </c:if>
+    </div>
 <hr/>
 <div>
     <h2>You earned ${b.battlePointsPlayer1} points</h2>

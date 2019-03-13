@@ -49,16 +49,13 @@ public class FinishController {
 
     @PostMapping
     public void battle(HttpServletResponse resp,
-                       HttpServletRequest req,
-                       @RequestParam(required = false) String exit) throws IOException {
+                       HttpServletRequest req) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
             Battle b = battleService.getBattleById(battleId);
-            if (exit != null) {
-                finishService.deleteBattle((Integer) req.getSession().getAttribute("battleId"));
-                resp.sendRedirect("/fs/main/");
-            }
+            finishService.deleteBattle((Integer) req.getSession().getAttribute("battleId"));
+            resp.sendRedirect("/fs/main/");
         } else {
             resp.sendRedirect("/fs/");
         }
