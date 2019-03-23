@@ -1,5 +1,6 @@
 package service;
 
+import collections.ActivePlayers;
 import collections.Battles;
 import dao.UserDao;
 import entity.Battle;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 public class FinishService {
     private final Battles battles;
     private final UserDao userDao;
+    private final ActivePlayers activePlayers;
 
     @Autowired
-    public FinishService(UserDao userDao, Battles battles) {
+    public FinishService(UserDao userDao, Battles battles, ActivePlayers activePlayers) {
         this.userDao = userDao;
         this.battles = battles;
+        this.activePlayers = activePlayers;
     }
 
     public Battle calculatePoints(Battle b) {
@@ -63,6 +66,12 @@ public class FinishService {
                 battles.getBattleList().remove(id);
             }
         }
+    }
+
+    public void deleteActivePlayers(Battle b) {
+        activePlayers.getActivePlayersList().remove(b.getPlayer1().getLogin());
+        activePlayers.getActivePlayersList().remove(b.getPlayer2().getLogin());
+
     }
 
 }
