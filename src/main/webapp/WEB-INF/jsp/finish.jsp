@@ -8,6 +8,9 @@
     <title>Finish</title>
 </head>
 <body>
+<form action="/fs/finish" method="post">
+    <input type="submit" value="Exit"/>
+</form>
 <div id="he">
     <div id="hero2">
         <nav>
@@ -22,25 +25,22 @@
     </div>
 </div>
 <div>
-    <h2>You earned ${b.battlePointsPlayer2} points</h2>
+    <h3 align='center'>${b.player2.login} earned ${b.battlePointsPlayer2} points</h3>
 </div>
 <hr/>
 <div align='center' class="topnav">
 <c:if test="${b.hp1<=0}">
-    ${b.player2.login} WIN!
+    <h1>${b.player2.login} WIN!</h1>
 </c:if>
 </div>
-<form action="/fs/finish" method="post">
-    <input type="submit" value="Exit"/>
-</form>
     <div align='center' class="topnav">
 <c:if test="${b.hp2<=0}">
-    ${b.player1.login} WIN!
+   <h1>${b.player1.login} WIN!</h1>
 </c:if>
     </div>
 <hr/>
 <div>
-    <h2>You earned ${b.battlePointsPlayer1} points</h2>
+    <h3 align='center'>${b.player1.login} earned ${b.battlePointsPlayer1} points</h3>
 </div>
 <div id="hero1">
     <nav>

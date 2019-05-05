@@ -115,9 +115,9 @@
         </c:forEach>
     </div>
     <hr/>
-    <div id="hero1">
+    <div align='center' id="hero1">
         <nav>
-            <div align='center' class="topnav">
+            <div class="topnav">
                 <h2>Login : ${b.player1.login} </h2>
                 <h2>Level : ${b.player1.lvl} </h2>
                 <h2>Class : ${b.player1.clas}</h2>
