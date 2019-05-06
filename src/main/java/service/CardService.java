@@ -23,7 +23,7 @@ public class CardService {
         this.cardDao = cardDao;
     }
 
-    public Card getById(int id) {
+    private Card getById(int id) {
         return cardDao.getById(id);
     }
 
@@ -40,7 +40,7 @@ public class CardService {
         return out;
     }
 
-    public List<Integer> getCardIdsFromJson(String json) {
+    private List<Integer> getCardIdsFromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, CardHolder.class).cards;
     }
@@ -61,24 +61,24 @@ public class CardService {
         u.setDeck(getJsonFromUserCardsIds(ids));
     }
 
-    public String getJsonFromUserCardsIds(List<Integer> ids) {
+    private String getJsonFromUserCardsIds(List<Integer> ids) {
         return new Gson().toJson(new CardHolder(ids));
     }
 
-    public List<Card> getAndRemoveTwoCardsFromTen(List<Card> tenCards) {
+    List<Card> getAndRemoveTwoCardsFromTen(List<Card> tenCards) {
         List<Card> out = new LinkedList<>();
         out.add(tenCards.remove(new Random().nextInt(tenCards.size())));
         out.add(tenCards.remove(new Random().nextInt(tenCards.size())));
         return out;
     }
 
-    public void moveRandomCard(List<Card> from, List<Card> to) {
+    void moveRandomCard(List<Card> from, List<Card> to) {
         if (from.size() > 0) {
             to.add(from.remove(new Random().nextInt(from.size())));
         }
     }
 
-    public Card chooseCardFromListById(List<Card> list, Integer id) {
+    Card chooseCardFromListById(List<Card> list, Integer id) {
         for (Card c : list) {
             if (id.equals(c.getId())) {
                 return c;

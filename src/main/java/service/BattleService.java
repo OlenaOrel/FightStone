@@ -120,8 +120,6 @@ public class BattleService {
         bat.setHeroUsePower(battle.isHeroUsePower());
 
         return bat;
-
-
     }
 
     public void processEndTurn(String userLogin, Battle b) {

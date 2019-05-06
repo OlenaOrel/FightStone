@@ -1,5 +1,6 @@
 package controller;
 
+import collections.UsersOnline;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,13 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+    private final UsersOnline usersOnline;
     private final UserService userService;
 
     @Autowired
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, UsersOnline usersOnline) {
         this.userService = userService;
+        this.usersOnline = usersOnline;
     }
 
     @GetMapping
@@ -38,6 +41,7 @@ public class RegisterController {
         if (!userService.isUserExists(login) && userService.isPassConfirm(pass, cpass)) {
             User u = userService.save(login, pass);
             userService.setUserAttributeToSession(req.getSession(), u);
+            usersOnline.getUsersOnline().put(u.getLogin(), u);
             resp.sendRedirect("/fs/main/");
 
         } else {

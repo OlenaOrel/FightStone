@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Battle implements Serializable {
     private int id;
@@ -215,5 +216,93 @@ public class Battle implements Serializable {
 
     public void setBattlePointsPlayer2(int battlePointsPlayer2) {
         this.battlePointsPlayer2 = battlePointsPlayer2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Battle battle = (Battle) o;
+
+        if (id != battle.id) return false;
+        if (numberOfMove != battle.numberOfMove) return false;
+        if (isMove1 != battle.isMove1) return false;
+        if (mana1 != battle.mana1) return false;
+        if (mana2 != battle.mana2) return false;
+        if (hp1 != battle.hp1) return false;
+        if (hp2 != battle.hp2) return false;
+        if (isHeroPowered1 != battle.isHeroPowered1) return false;
+        if (isHeroPowered2 != battle.isHeroPowered2) return false;
+        if (IsHeroUsePower != battle.IsHeroUsePower) return false;
+        if (battlePointsPlayer1 != battle.battlePointsPlayer1) return false;
+        if (battlePointsPlayer2 != battle.battlePointsPlayer2) return false;
+        if (!Objects.equals(player1, battle.player1)) return false;
+        if (!Objects.equals(player2, battle.player2)) return false;
+        if (!Objects.equals(deck1, battle.deck1)) return false;
+        if (!Objects.equals(deck2, battle.deck2)) return false;
+        if (!Objects.equals(inHand1, battle.inHand1)) return false;
+        if (!Objects.equals(inHand2, battle.inHand2)) return false;
+        if (!Objects.equals(onTable1, battle.onTable1)) return false;
+        if (!Objects.equals(onTable2, battle.onTable2)) return false;
+        if (!Objects.equals(fromHandChoosen, battle.fromHandChoosen))
+            return false;
+        return Objects.equals(fromTableChoosen, battle.fromTableChoosen);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (player1 != null ? player1.hashCode() : 0);
+        result = 31 * result + (player2 != null ? player2.hashCode() : 0);
+        result = 31 * result + (deck1 != null ? deck1.hashCode() : 0);
+        result = 31 * result + (deck2 != null ? deck2.hashCode() : 0);
+        result = 31 * result + (inHand1 != null ? inHand1.hashCode() : 0);
+        result = 31 * result + (inHand2 != null ? inHand2.hashCode() : 0);
+        result = 31 * result + (onTable1 != null ? onTable1.hashCode() : 0);
+        result = 31 * result + (onTable2 != null ? onTable2.hashCode() : 0);
+        result = 31 * result + numberOfMove;
+        result = 31 * result + (isMove1 ? 1 : 0);
+        result = 31 * result + mana1;
+        result = 31 * result + mana2;
+        result = 31 * result + hp1;
+        result = 31 * result + hp2;
+        result = 31 * result + (isHeroPowered1 ? 1 : 0);
+        result = 31 * result + (isHeroPowered2 ? 1 : 0);
+        result = 31 * result + (IsHeroUsePower ? 1 : 0);
+        result = 31 * result + (fromHandChoosen != null ? fromHandChoosen.hashCode() : 0);
+        result = 31 * result + (fromTableChoosen != null ? fromTableChoosen.hashCode() : 0);
+        result = 31 * result + battlePointsPlayer1;
+        result = 31 * result + battlePointsPlayer2;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Battle{" +
+                "id=" + id +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                ", deck1=" + deck1 +
+                ", deck2=" + deck2 +
+                ", inHand1=" + inHand1 +
+                ", inHand2=" + inHand2 +
+                ", onTable1=" + onTable1 +
+                ", onTable2=" + onTable2 +
+                ", numberOfMove=" + numberOfMove +
+                ", isMove1=" + isMove1 +
+                ", mana1=" + mana1 +
+                ", mana2=" + mana2 +
+                ", hp1=" + hp1 +
+                ", hp2=" + hp2 +
+                ", isHeroPowered1=" + isHeroPowered1 +
+                ", isHeroPowered2=" + isHeroPowered2 +
+                ", IsHeroUsePower=" + IsHeroUsePower +
+                ", fromHandChoosen=" + fromHandChoosen +
+                ", fromTableChoosen=" + fromTableChoosen +
+                ", battlePointsPlayer1=" + battlePointsPlayer1 +
+                ", battlePointsPlayer2=" + battlePointsPlayer2 +
+                '}';
     }
 }

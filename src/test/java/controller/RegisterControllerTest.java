@@ -1,5 +1,6 @@
 package controller;
 
+import collections.UsersOnline;
 import entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterControllerTest {
+    private UsersOnline usersOnline = mock(UsersOnline.class);
     private UserService userService = mock(UserService.class);
     @Mock
     private HttpSession session;
@@ -38,7 +40,7 @@ public class RegisterControllerTest {
 
     @Test
     public void registerViewTest() {
-        RegisterController controller = new RegisterController(userService);
+        RegisterController controller = new RegisterController(userService, usersOnline);
         ModelAndView result = controller.registerView();
         assertNotNull(result);
         assertEquals("register", result.getViewName());
@@ -47,7 +49,7 @@ public class RegisterControllerTest {
 
     @Test
     public void registerTestIncorrectConfirmPass() throws IOException {
-        RegisterController controller = new RegisterController(userService);
+        RegisterController controller = new RegisterController(userService, usersOnline);
         controller.register("any", "any", "any", resp, req);
         verify(userService, times(1)).isUserExists(anyString());
         verify(userService, times(0)).isPassConfirm(anyString(), anyString());
@@ -59,7 +61,7 @@ public class RegisterControllerTest {
     @Test
     public void registerTestUserExists() throws IOException {
         when(userService.isUserExists(anyString())).thenReturn(true);
-        RegisterController controller = new RegisterController(userService);
+        RegisterController controller = new RegisterController(userService, usersOnline);
         controller.register("any", "any", "any", resp, req);
         verify(userService, times(0)).isPassConfirm(anyString(), anyString());
         verify(req, times(0)).getSession();
@@ -70,7 +72,7 @@ public class RegisterControllerTest {
     @Test
     public void registerTestUserNew() throws IOException {
         when(userService.isUserExists(anyString())).thenReturn(false);
-        RegisterController controller = new RegisterController(userService);
+        RegisterController controller = new RegisterController(userService, usersOnline);
         controller.register("any", "any", "any", resp, req);
         verify(userService, times(1)).isPassConfirm(anyString(), anyString());
         verify(resp, times(1)).sendRedirect(anyString());
@@ -80,7 +82,7 @@ public class RegisterControllerTest {
     public void savesUser() throws IOException {
         when(userService.isUserExists(anyString())).thenReturn(false);
         when(userService.isPassConfirm(anyString(), anyString())).thenReturn(true);
-        RegisterController controller = new RegisterController(userService);
+        RegisterController controller = new RegisterController(userService, usersOnline);
         controller.register("any", "any", "any", resp, req);
         verify(userService, times(1)).save(anyString(), anyString());
         verify(resp, times(1)).sendRedirect(anyString());
