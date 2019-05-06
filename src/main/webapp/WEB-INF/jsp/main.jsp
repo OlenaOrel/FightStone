@@ -13,17 +13,22 @@
         <input type="hidden" name="logout" value="${u.login}"/>
         <input type="submit" value="Log out">
     </form>
+    <nav>
+        <div align ='left'>
+            <h2>WaitListSize : ${wait}</h2>
+            <h2>OnlineListSize : ${online}</h2>
+            <h2>InBattleListSize : ${active}</h2>
+        </div>
+    </nav>
 </div>
-<div>
+<hr>
+<div align="center" class="container">
     <nav>
         <div>
             <h2>Login : ${u.login} </h2>
             <h2>Level : ${u.lvl} </h2>
             <h2>Points : ${u.points}</h2>
             <h2>Stars : ${u.stars}</h2>
-            <h2>WaitListSize : ${wait}</h2>
-            <h2>OnlineListSize : ${online}</h2>
-            <h2>InBattleListSize : ${active}</h2>
         </div>
     </nav>
 </div>
