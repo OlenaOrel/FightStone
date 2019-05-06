@@ -14,6 +14,7 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -34,7 +35,7 @@ public class FinishController {
 
     @GetMapping
     public ModelAndView finishView(HttpServletRequest req,
-                                   HttpServletResponse resp) throws IOException {
+                                   HttpServletResponse resp) {
         User u = userService.getUserAttributeFromSession(req.getSession());
         Battle b = finishService.result(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId")));
         if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer1())) {
@@ -42,27 +43,28 @@ public class FinishController {
         } else if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer2())) {
             return new ModelAndView("finish", "b", battleService.inverse(b));
         } else {
-            resp.sendRedirect("/fs/");
-            return null;
+            return new ModelAndView("login");
         }
 
     }
 
     @PostMapping
     public void battle(HttpServletResponse resp,
-                       HttpServletRequest req) throws IOException {
+                       HttpServletRequest req, HttpSession s) throws IOException {
         User u = userService.getUserAttributeFromSession(req.getSession());
         if (u != null) {
             if (!finishService.isFirstExit()) {
                 finishService.setFirstExit();
+                req.getSession().setAttribute("battleId", 0);
                 resp.sendRedirect("/fs/main");
                 return;
             }
+            finishService.notFirstExiting();
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
             Battle b = battleService.getBattleById(battleId);
             finishService.deleteActivePlayers(b);
             finishService.deleteBattle((Integer) req.getSession().getAttribute("battleId"));
-            req.setAttribute("battleId", null);
+            req.getSession().setAttribute("battleId", null);
             resp.sendRedirect("/fs/main/");
         } else {
             resp.sendRedirect("/fs/");

@@ -8,12 +8,15 @@ import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 @Service
 public class FinishService {
     private final Battles battles;
     private final UserDao userDao;
     private final ActivePlayers activePlayers;
-    private static Battle battle;
     private static boolean firstExit = false;
     @Autowired
     private FinishService(UserDao userDao, Battles battles, ActivePlayers activePlayers) {
@@ -26,48 +29,47 @@ public class FinishService {
     public Battle calculatePoints(Battle b) {
         User u1 = b.getPlayer1();
         User u2 = b.getPlayer2();
+        List<User> winnerAndLooser;
         if (b.getHp1() <= 0) {
+            winnerAndLooser = calculating(u2, u1, b);
+            u1 = winnerAndLooser.remove(1);
+            u2 = winnerAndLooser.remove(0);
             u1.setPoints(u1.getPoints() + (b.getBattlePointsPlayer1() / 2));
-            if (u1.getStars() == 0 && u1.getLvl() > 0) {
-                u1.setLvl(u1.getLvl() - 1);
-                u1.setStars(4);
-            } else if (u1.getLvl() > 0 && u1.getStars() >= 0) {
-                u1.setStars(u1.getStars() - 1);
-            }
             u2.setPoints(u2.getPoints() + b.getBattlePointsPlayer2());
-            u2.setStars(u2.getStars() + 1);
-            if (u2.getStars() == 5) {
-                u2.setLvl(u2.getLvl() + 1);
-                u2.setStars(0);
-            }
+
         } else if (b.getHp2() <= 0) {
-            u2.setPoints(u2.getPoints() + b.getBattlePointsPlayer2() / 2);
-            if (u2.getStars() == 0 && u2.getLvl() > 0) {
-                u2.setLvl(u2.getLvl() - 1);
-                u2.setStars(4);
-            } else if (u2.getStars() >= 0 && u2.getLvl() > 0) {
-                u2.setStars(u2.getStars() - 1);
-            }
+            winnerAndLooser = calculating(u1, u2, b);
+            u2 = winnerAndLooser.remove(1);
+            u1 = winnerAndLooser.remove(0);
+            u2.setPoints(u2.getPoints() + (b.getBattlePointsPlayer2() / 2));
             u1.setPoints(u1.getPoints() + b.getBattlePointsPlayer1());
-            u1.setStars(u1.getStars() + 1);
-            if (u1.getStars() == 5) {
-                u1.setLvl(u1.getLvl() + 1);
-                u1.setStars(0);
             }
             userDao.update(u1);
             userDao.update(u2);
             b.setPlayer1(u1);
             b.setPlayer2(u2);
-        }
         return b;
     }
 
-    public void deleteBattle(Integer id) {
-        for (Integer ids : battles.getBattleList().keySet()) {
-            if (ids.equals(id)) {
-                battles.getBattleList().remove(id);
-            }
+    private List<User> calculating(User winner, User looser, Battle b) {
+        if (looser.getStars() == 0 && looser.getLvl() > 0) {
+            looser.setLvl(looser.getLvl() - 1);
+            looser.setStars(4);
+        } else if (looser.getLvl() > 0 && looser.getStars() >= 0) {
+            looser.setStars(looser.getStars() - 1);
         }
+        winner.setStars(winner.getStars() + 1);
+        if (winner.getStars() == 5) {
+            winner.setLvl(winner.getLvl() + 1);
+            winner.setStars(0);
+        }
+        List<User> usersInBattle = new LinkedList<>();
+        Collections.addAll(usersInBattle, winner, looser);
+        return usersInBattle;
+    }
+
+    public void deleteBattle(Integer id) {
+                battles.getBattleList().remove(id);
     }
 
     public void deleteActivePlayers(Battle b) {
@@ -80,10 +82,8 @@ public class FinishService {
     }
 
     public Battle result(Battle bat) {
-        if (battle == null) {
-            battle = calculatePoints(bat);
-        }
-        return battle;
+        calculatePoints(bat);
+        return bat;
     }
 
     public boolean isFirstExit() {
@@ -92,6 +92,10 @@ public class FinishService {
 
     public void setFirstExit() {
         firstExit = true;
+    }
+
+    public void notFirstExiting() {
+        firstExit = false;
     }
 
 }
