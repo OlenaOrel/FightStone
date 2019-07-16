@@ -1,7 +1,7 @@
 package service;
 
 import collections.WaitUsers;
-import entity.User;
+import dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class WaitService {
         return waitUsers.getWaitList().isEmpty();
     }
 
-    public User getUserForBattle() {
+    public UserDto getUserForBattle() {
         return waitUsers.getWaitList()
                 .remove(waitUsers.getWaitList().keySet().iterator().next());
     }

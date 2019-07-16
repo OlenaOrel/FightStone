@@ -1,5 +1,6 @@
 package controller;
 
+import dto.UserDto;
 import entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +31,15 @@ public class LoginControllerTest {
     private HttpServletResponse resp;
     @Mock
     private User user;
+    @Mock
+    private UserDto uDto;
 
     @Before
     public void before() {
         when(req.getSession()).thenReturn(session);
         when(userService.getByLogin(anyString())).thenReturn(user);
         when(user.getPass()).thenReturn("pass");
-
+        when(userService.getUserDto(user)).thenReturn(uDto);
     }
 
     @Test
@@ -52,22 +55,19 @@ public class LoginControllerTest {
         LoginController controller = new LoginController(userService);
         controller.login("login", "pass", req, resp);
         verify(userService, times(1)).getByLogin("login");
-        verify(user, times(1)).getPass();
-        verify(userService, times(1)).setUserAttributeToSession(session, user);
+        verify(userService, times(1)).setUserAttributeToSession(session, user, uDto);
         verify(req, times(1)).getSession();
-        verify(userService, times(1)).addUsersOnline(user);
+        verify(userService, times(1)).addUsersOnline(uDto);
         verify(resp, times(1)).sendRedirect(anyString());
     }
 
     @Test
     public void loginTestIncorrectLogin() throws IOException {
         when(userService.getByLogin(anyString())).thenReturn(null);
-
         LoginController controller = new LoginController(userService);
         controller.login("login", "pass", req, resp);
         verify(userService, times(1)).getByLogin("login");
         verify(resp, times(1)).sendRedirect(anyString());
-        verify(user, times(0)).getPass();
         verify(req, times(0)).getSession();
     }
 
@@ -79,7 +79,7 @@ public class LoginControllerTest {
         controller.login("login", "pass", req, resp);
         verify(userService, times(1)).getByLogin("login");
         verify(resp, times(1)).sendRedirect(anyString());
-        verify(user, times(1)).getPass();
+
         verify(req, times(0)).getSession();
     }
 }

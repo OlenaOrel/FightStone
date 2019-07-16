@@ -3,6 +3,7 @@ package service;
 import collections.ActivePlayers;
 import collections.Battles;
 import dao.UserDao;
+import dto.UserDto;
 import entity.Battle;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class FinishService {
     }
 
 
-    public Battle calculatePoints(Battle b) {
-        User u1 = b.getPlayer1();
-        User u2 = b.getPlayer2();
-        List<User> winnerAndLooser;
+    private Battle calculatePoints(Battle b) {
+        UserDto u1 = b.getPlayer1();
+        UserDto u2 = b.getPlayer2();
+        List<UserDto> winnerAndLooser;
         if (b.getHp1() <= 0) {
             winnerAndLooser = calculating(u2, u1, b);
             u1 = winnerAndLooser.remove(1);
@@ -43,15 +44,13 @@ public class FinishService {
             u1 = winnerAndLooser.remove(0);
             u2.setPoints(u2.getPoints() + (b.getBattlePointsPlayer2() / 2));
             u1.setPoints(u1.getPoints() + b.getBattlePointsPlayer1());
-            }
-            userDao.update(u1);
-            userDao.update(u2);
-            b.setPlayer1(u1);
-            b.setPlayer2(u2);
+        }
+        b.setPlayer1(u1);
+        b.setPlayer2(u2);
         return b;
     }
 
-    private List<User> calculating(User winner, User looser, Battle b) {
+    private List<UserDto> calculating(UserDto winner, UserDto looser, Battle b) {
         if (looser.getStars() == 0 && looser.getLvl() > 0) {
             looser.setLvl(looser.getLvl() - 1);
             looser.setStars(4);
@@ -63,13 +62,13 @@ public class FinishService {
             winner.setLvl(winner.getLvl() + 1);
             winner.setStars(0);
         }
-        List<User> usersInBattle = new LinkedList<>();
+        List<UserDto> usersInBattle = new LinkedList<>();
         Collections.addAll(usersInBattle, winner, looser);
         return usersInBattle;
     }
 
     public void deleteBattle(Integer id) {
-                battles.getBattleList().remove(id);
+        battles.getBattleList().remove(id);
     }
 
     public void deleteActivePlayers(Battle b) {
@@ -96,6 +95,13 @@ public class FinishService {
 
     public void notFirstExiting() {
         firstExit = false;
+    }
+
+    public void updateUserPoints(UserDto userDto, User u) {
+        u.setPoints(userDto.getPoints());
+        u.setStars(userDto.getStars());
+        u.setLvl(userDto.getLvl());
+        userDao.update(u);
     }
 
 }

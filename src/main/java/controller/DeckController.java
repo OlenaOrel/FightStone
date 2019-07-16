@@ -1,5 +1,6 @@
 package controller;
 
+import dto.UserDto;
 import entity.Card;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,13 @@ public class DeckController {
     @GetMapping
     public ModelAndView deckView(HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             List<Card> allCards = cardService.getAllCards();
             ModelAndView out = new ModelAndView("deck");
-            List<Card> userCards = cardService.getUserCards(u.getDeck());
+            List<Card> userCards = uDto.getDeck();
             userService.removeExistsCards(allCards, userCards);
-            out.addObject("u", u);
+            out.addObject("uDto", uDto);
             out.addObject("cards", allCards);
             out.addObject("userCards", userCards);
             return out;
@@ -52,23 +53,42 @@ public class DeckController {
     public void deckOperations(HttpServletRequest req,
                                HttpServletResponse resp,
                                @RequestParam Integer id) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             if (id == 0) {
-                if (cardService.isTenCardsInDeck(u.getDeck())) {
-                    userService.update(u);
-                    resp.sendRedirect("/fs/main/");
+                if (cardService.isTenCardsInDeck(uDto.getDeck())) {
+                    User u = userService.getUserAttributeFromSession(req.getSession());
+                    if (u != null) {
+                        cardService.updateUserDeck(u, cardService.getCardIdsFromUserDeck(uDto.getDeck()));
+                        userService.update(u);
+                        resp.sendRedirect("/fs/main/");
+                    } else {
+                        resp.sendRedirect("/fs/");
+                    }
                 } else {
                     resp.sendRedirect("/fs/deck/");
                 }
             }
+            if (id == 2147483647) {
+                User u = userService.getUserAttributeFromSession(req.getSession());
+                if (u != null) {
+                    uDto.setDeck(cardService.getUserCards(u.getDeck()));
+                    resp.sendRedirect("/fs/main/");
+                } else {
+                    resp.sendRedirect("/fs/");
+                }
+            }
             if (id < 0) {
-                cardService.removeCardFromUserDeck(u, id * -1);
+                cardService.removeCardFromUserDeck(uDto, id * -1);
                 resp.sendRedirect("/fs/deck/");
             }
-            if (id > 0) {
-                cardService.addCardToUserDeck(u, id);
-                resp.sendRedirect("/fs/deck/");
+            if (id > 0 && id < 2147483647) {
+                if (!cardService.isTenCardsInDeck(uDto.getDeck())) {
+                    cardService.addCardToUserDeck(uDto, id);
+                    resp.sendRedirect("/fs/deck/");
+                } else {
+                    resp.sendRedirect("/fs/deck/");
+                }
             }
         } else {
             resp.sendRedirect("/fs/");

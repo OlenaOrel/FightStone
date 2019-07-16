@@ -1,8 +1,8 @@
 package controller;
 
 import collections.WaitUsers;
+import dto.UserDto;
 import entity.Battle;
-import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +37,10 @@ public class WaitController {
     @GetMapping
     public ModelAndView waitPage(HttpServletRequest req,
                                  HttpServletResponse resp) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             if (waitUsers.getWaitList().size() == 1) {
-                return new ModelAndView("wait", "u", u);
+                return new ModelAndView("wait", "uDto", uDto);
             } else {
                 req.getSession().getId();
                 resp.sendRedirect("/fs/battle/");
@@ -57,23 +57,23 @@ public class WaitController {
     public void waitLogic(HttpServletRequest req,
                           HttpServletResponse resp,
                           @RequestParam String bat) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             if (bat.equals("in")) {
-                if (!waitService.isWaitListEmpty() && !waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
-                    User oppUser = waitService.getUserForBattle();
-                    int battleId = battleService.createBattle(u, oppUser);
+                if (!waitService.isWaitListEmpty() && !waitService.waitUsersListContainsUserByLogin(uDto.getLogin())) {
+                    UserDto oppUser = waitService.getUserForBattle();
+                    int battleId = battleService.createBattle(uDto, oppUser);
                     req.getSession().setAttribute("battleId", battleId);
-                    battleService.addActivePlayer(u, oppUser, battleId);
+                    battleService.addActivePlayer(uDto, oppUser, battleId);
                     resp.sendRedirect("/fs/battle/");
                 } else {
-                    Battle b = battleService.getBattleById(battleService.isUserInBattle2(u.getLogin()));
+                    Battle b = battleService.getBattleById(battleService.isUserInBattle2(uDto.getLogin()));
                     if (b != null) {
                         req.getSession().setAttribute("battleId", b.getId());
                         resp.sendRedirect("/fs/battle/");
                     } else {
-                        if (!waitService.waitUsersListContainsUserByLogin(u.getLogin())) {
-                            waitUsers.getWaitList().put(u.getLogin(), u);
+                        if (!waitService.waitUsersListContainsUserByLogin(uDto.getLogin())) {
+                            waitUsers.getWaitList().put(uDto.getLogin(), uDto);
                         }
                         resp.sendRedirect("/fs/wait/");
                     }
@@ -82,8 +82,8 @@ public class WaitController {
 
             }
             if (bat.equals("out")) {
-                if (waitUsers.getWaitList().containsKey(u.getLogin())) {
-                    waitUsers.getWaitList().remove(u.getLogin());
+                if (waitUsers.getWaitList().containsKey(uDto.getLogin())) {
+                    waitUsers.getWaitList().remove(uDto.getLogin());
                 }
                 resp.sendRedirect("/fs/main/");
             }

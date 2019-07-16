@@ -1,8 +1,8 @@
 package controller;
 
 import collections.WaitUsers;
+import dto.UserDto;
 import entity.Battle;
-import entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +31,9 @@ public class WaitControllerTest {
     private WaitUsers waitUsers = mock(WaitUsers.class);
 
     @Mock
-    User user;
+    UserDto user;
     @Mock
-    Map<String, User> users;
+    Map<String, UserDto> users;
     @Mock
     Battle battle;
     @Mock
@@ -47,7 +47,7 @@ public class WaitControllerTest {
     @Before
     public void before() {
         when(req.getSession()).thenReturn(session);
-        when(userService.getUserAttributeFromSession(req.getSession())).thenReturn(user);
+        when(userService.getUserDtoAttributeFromSession(req.getSession())).thenReturn(user);
         when(waitUsers.getWaitList()).thenReturn(users);
         when(battleService.getBattleById(battleService.isUserInBattle2(user.getLogin()))).thenReturn(battle);
     }
@@ -59,7 +59,7 @@ public class WaitControllerTest {
         ModelAndView result = controller.waitPage(req, resp);
         assertNotNull(result);
         assertEquals("wait", result.getViewName());
-        assertTrue(result.getModel().containsKey("u"));
+        assertTrue(result.getModel().containsKey("uDto"));
         assertTrue(result.getModel().containsValue(user));
     }
 
@@ -74,7 +74,7 @@ public class WaitControllerTest {
 
     @Test
     public void waitPageUserNullTest() throws IOException {
-        when(userService.getUserAttributeFromSession(req.getSession())).thenReturn(null);
+        when(userService.getUserDtoAttributeFromSession(req.getSession())).thenReturn(null);
         WaitController controller = new WaitController(userService, waitUsers, waitService, battleService);
         ModelAndView result = controller.waitPage(req, resp);
         verify(req.getSession()).getId();
@@ -124,7 +124,7 @@ public class WaitControllerTest {
 
     @Test
     public void waitLogicUserNullTest() throws IOException {
-        when(userService.getUserAttributeFromSession(req.getSession())).thenReturn(null);
+        when(userService.getUserDtoAttributeFromSession(req.getSession())).thenReturn(null);
         WaitController controller = new WaitController(userService, waitUsers, waitService, battleService);
         controller.waitLogic(req, resp, "any");
         verify(resp).sendRedirect("/fs/");

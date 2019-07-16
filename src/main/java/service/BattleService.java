@@ -2,9 +2,9 @@ package service;
 
 import collections.ActivePlayers;
 import collections.Battles;
+import dto.UserDto;
 import entity.Battle;
 import entity.Card;
-import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +26,15 @@ public class BattleService {
         this.activePlayers = activePlayers;
     }
 
-    public int createBattle(User player1, User player2) {
+    public int createBattle(UserDto player1, UserDto player2) {
         Battle b = new Battle();
         b.setId(new Random().nextInt());
         b.setPlayer1(player1);
         b.setPlayer2(player2);
-        List<Card> p1cards = cardService.getUserCards(player1.getDeck());
-        List<Card> p2cards = cardService.getUserCards(player2.getDeck());
-        b.setDeck1(p1cards);
-        b.setDeck2(p2cards);
-        b.setInHand1(cardService.getAndRemoveTwoCardsFromTen(p1cards));
-        b.setInHand2(cardService.getAndRemoveTwoCardsFromTen(p2cards));
+        b.setDeck1(player1.getDeck());
+        b.setDeck2(player2.getDeck());
+        b.setInHand1(cardService.getAndRemoveTwoCardsFromTen(player1.getDeck()));
+        b.setInHand2(cardService.getAndRemoveTwoCardsFromTen(player2.getDeck()));
         b.setOnTable1(new LinkedList<>());
         b.setOnTable2(new LinkedList<>());
 
@@ -147,7 +145,6 @@ public class BattleService {
         for (Card c : b.getOnTable2()) {
             c.setCardCanMoove(true);
         }
-
     }
 
     public void moveCardById(List<Card> from, List<Card> to, Integer id) {
@@ -289,7 +286,7 @@ public class BattleService {
         }
     }
 
-    public void addActivePlayer(User u1, User u2, int battleId) {
+    public void addActivePlayer(UserDto u1, UserDto u2, int battleId) {
         activePlayers.getActivePlayersList().put(u1.getLogin(), battleId);
         activePlayers.getActivePlayersList().put(u2.getLogin(), battleId);
     }
@@ -356,4 +353,9 @@ public class BattleService {
     public boolean isSomeHeroDead(Battle b) {
         return (b.getHp1() <= 0 || b.getHp2() <= 0);
     }
+
+    public boolean isUserDtoPlayer1(UserDto userDto, Battle b) {
+        return userDto.equals(b.getPlayer1());
+    }
+
 }

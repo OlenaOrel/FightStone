@@ -2,6 +2,7 @@ package service;
 
 import collections.UsersOnline;
 import dao.UserDao;
+import dto.UserDto;
 import entity.Card;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,17 @@ import java.util.Random;
 public class UserService {
 
     private static final String USER = "user";
+    private static final String UDTO = "udto";
 
     private final UserDao udao;
     private final UsersOnline usersOnline;
+    private final CardService cardService;
 
     @Autowired
-    public UserService(UserDao udao, UsersOnline usersOnline) {
+    public UserService(UserDao udao, UsersOnline usersOnline, CardService cardService) {
         this.udao = udao;
         this.usersOnline = usersOnline;
+        this.cardService = cardService;
     }
 
     public boolean isUserExists(String login) {
@@ -44,12 +48,17 @@ public class UserService {
         return s1 != null && s1.equals(s2);
     }
 
-    public void setUserAttributeToSession(HttpSession session, User u) {
+    public void setUserAttributeToSession(HttpSession session, User u, UserDto uDto) {
         session.setAttribute(USER, u);
+        session.setAttribute(UDTO, uDto);
     }
 
     public User getUserAttributeFromSession(HttpSession s) {
         return (User) s.getAttribute(USER);
+    }
+
+    public UserDto getUserDtoAttributeFromSession(HttpSession s) {
+        return (UserDto) s.getAttribute(UDTO);
     }
 
     public void update(User u) {
@@ -61,11 +70,24 @@ public class UserService {
         allCards.removeAll(userCards);
     }
 
-    public void addUsersOnline(User u) {
-        usersOnline.getUsersOnline().put(u.getLogin(), u);
+    public void addUsersOnline(UserDto userDto) {
+        usersOnline.getUsersOnline().put(userDto.getLogin(), userDto);
     }
 
     public void removeUserFromSession(String login) {
         usersOnline.getUsersOnline().remove(login);
+    }
+
+    public UserDto getUserDto(User u) {
+        UserDto userDto = new UserDto();
+        userDto.setId(u.getId());
+        userDto.setLogin(u.getLogin());
+        userDto.setPass(u.getPass());
+        userDto.setPoints(u.getPoints());
+        userDto.setLvl(u.getLvl());
+        userDto.setStars(u.getStars());
+        userDto.setDeck(cardService.getUserCards(u.getDeck()));
+        userDto.setClas(u.getClas());
+        return userDto;
     }
 }

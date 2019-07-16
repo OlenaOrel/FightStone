@@ -17,9 +17,10 @@
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="service"/>
     <context:component-scan base-package="collections"/>
+    <context:component-scan base-package="dto"/>
 
     <bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="ViewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="ViewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix">
             <value>/WEB-INF/jsp/</value>
         </property>

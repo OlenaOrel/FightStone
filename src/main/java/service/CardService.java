@@ -3,6 +3,7 @@ package service;
 
 import com.google.gson.Gson;
 import dao.CardDao;
+import dto.UserDto;
 import entity.Card;
 import entity.User;
 import holder.CardHolder;
@@ -45,24 +46,45 @@ public class CardService {
         return gson.fromJson(json, CardHolder.class).cards;
     }
 
-    public boolean isTenCardsInDeck(String json) {
-        return getCardIdsFromJson(json).size() == 10;
+    public boolean isTenCardsInDeck(List<Card> deck) {
+        return deck.size() == 10;
     }
 
-    public void removeCardFromUserDeck(User u, Integer id) {
-        List<Integer> ids = getCardIdsFromJson(u.getDeck());
-        ids.remove(id);
-        u.setDeck(getJsonFromUserCardsIds(ids));
+    public void removeCardFromUserDeck(UserDto uDto, Integer id) {
+        List<Card> tmp = uDto.getDeck();
+        for (int i = 0; i < tmp.size(); i++) {
+            if (id.equals(tmp.get(i).getId())) {
+                tmp.remove(tmp.get(i));
+            }
+        }
+//        for (Card card : tmp){
+//            if (id.equals(card.getId())){
+//                tmp.remove(card);
+//            }
+//        }
+        uDto.setDeck(tmp);
     }
 
-    public void addCardToUserDeck(User u, Integer id) {
-        List<Integer> ids = getCardIdsFromJson(u.getDeck());
-        ids.add(id);
-        u.setDeck(getJsonFromUserCardsIds(ids));
+    public void addCardToUserDeck(UserDto uDto, Integer id) {
+        List<Card> tmp = uDto.getDeck();
+        tmp.add(getById(id));
+        uDto.setDeck(tmp);
+    }
+
+    public List<Integer> getCardIdsFromUserDeck(List<Card> deck) {
+        List<Integer> out = new LinkedList<>();
+        for (Card c : deck) {
+            out.add(c.getId());
+        }
+        return out;
     }
 
     private String getJsonFromUserCardsIds(List<Integer> ids) {
         return new Gson().toJson(new CardHolder(ids));
+    }
+
+    public void updateUserDeck(User u, List<Integer> ids) {
+        u.setDeck(getJsonFromUserCardsIds(ids));
     }
 
     List<Card> getAndRemoveTwoCardsFromTen(List<Card> tenCards) {

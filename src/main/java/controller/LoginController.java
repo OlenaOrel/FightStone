@@ -1,6 +1,7 @@
 package controller;
 
 
+import dto.UserDto;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +39,9 @@ public class LoginController {
                       HttpServletResponse resp) throws IOException {
         User u = userService.getByLogin(login);
         if(u != null && u.getPass().equals(pass)){
-            userService.setUserAttributeToSession(req.getSession(), u);
-            userService.addUsersOnline(u);
+            UserDto uDto = userService.getUserDto(u);
+            userService.setUserAttributeToSession(req.getSession(), u, uDto);
+            userService.addUsersOnline(uDto);
             resp.sendRedirect("/fs/main/");
         }else{
             resp.sendRedirect("/fs/");

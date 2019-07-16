@@ -3,7 +3,7 @@ package controller;
 import collections.ActivePlayers;
 import collections.UsersOnline;
 import collections.WaitUsers;
-import entity.User;
+import dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import service.CardService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +21,13 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/main")
 public class MainController {
-    private final CardService cardService;
     private final UserService userService;
     private final WaitUsers waitUsers;
     private final UsersOnline usersOnline;
     private final ActivePlayers activePlayers;
     @Autowired
-    public MainController(UserService userService, CardService cardService, WaitUsers waitUsers, UsersOnline usersOnline, ActivePlayers activePlayers) {
+    public MainController(UserService userService, WaitUsers waitUsers, UsersOnline usersOnline, ActivePlayers activePlayers) {
         this.userService = userService;
-        this.cardService = cardService;
         this.waitUsers = waitUsers;
         this.usersOnline = usersOnline;
         this.activePlayers = activePlayers;
@@ -39,11 +36,11 @@ public class MainController {
     @GetMapping
     public ModelAndView mainPage(HttpServletResponse resp,
                                  HttpServletRequest req) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             ModelAndView model = new ModelAndView("main");
-            model.addObject("u", u);
-            model.addObject("userCards", cardService.getUserCards(u.getDeck()));
+            model.addObject("uDto", uDto);
+            model.addObject("userCards", uDto.getDeck());
             model.addObject("wait", waitUsers.getWaitList().size());
             model.addObject("online", usersOnline.getUsersOnline().size());
             model.addObject("active", activePlayers.getActivePlayersList().size());
@@ -59,6 +56,7 @@ public class MainController {
                        HttpServletResponse response,
                        @RequestParam String logout) throws IOException {
         session.setAttribute("user", null);
+        session.setAttribute("uDto", null);
         userService.removeUserFromSession(logout);
         response.sendRedirect("/fs/");
     }

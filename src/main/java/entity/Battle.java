@@ -1,14 +1,15 @@
 package entity;
 
-import java.io.Serializable;
+import dto.UserDto;
+
 import java.util.List;
 import java.util.Objects;
 
-public class Battle implements Serializable {
+public class Battle {
     private int id;
 
-    private User player1;
-    private User player2;
+    private UserDto player1;
+    private UserDto player2;
 
     private List<Card> deck1;
     private List<Card> deck2;
@@ -50,19 +51,19 @@ public class Battle implements Serializable {
         this.id = id;
     }
 
-    public User getPlayer1() {
+    public UserDto getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(User player1) {
+    public void setPlayer1(UserDto player1) {
         this.player1 = player1;
     }
 
-    public User getPlayer2() {
+    public UserDto getPlayer2() {
         return player2;
     }
 
-    public void setPlayer2(User player2) {
+    public void setPlayer2(UserDto player2) {
         this.player2 = player2;
     }
 

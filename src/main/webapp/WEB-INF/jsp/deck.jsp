@@ -41,10 +41,10 @@
 <body>
 <nav>
 
-    <h2>Login : ${u.login} </h2>
-    <h2>Level : ${u.lvl} </h2>
-    <h2>Points : ${u.points}</h2>
-    <h2>Stars : ${u.stars}</h2>
+    <h2>Login : ${uDto.login} </h2>
+    <h2>Level : ${uDto.lvl} </h2>
+    <h2>Points : ${uDto.points}</h2>
+    <h2>Stars : ${uDto.stars}</h2>
 
 </nav>
 
@@ -145,7 +145,7 @@
     </form>
 </div>
 <div align='center'>
-    <form action="/fs/main/" method="get">
+    <form action="/fs/deck?id=2147483647" method="post">
         <input type="submit" value="Main Page"/>
     </form>
 </div>

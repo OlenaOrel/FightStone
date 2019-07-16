@@ -1,18 +1,18 @@
 package service;
 
 import collections.WaitUsers;
-import entity.User;
+import dto.UserDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,11 +22,13 @@ public class WaitServiceTest {
     private WaitUsers waitUsers = mock(WaitUsers.class);
 
     @Mock
-    User u;
+    UserDto uDto;
     @Mock
-    Map<String, User> users;
+    Map<String, UserDto> users;
     @Mock
     Set<String> logins;
+    @Mock
+    Iterator<String> iterator;
 
     @Before
     public void before() {
@@ -49,13 +51,15 @@ public class WaitServiceTest {
         assertTrue(result);
     }
 
-//    @Test
-//    public void getUserForBattleTest(){
-//        when(users.remove(u.getLogin())).thenReturn(u);
-//        WaitService service = new WaitService(waitUsers);
-//        User result = service.getUserForBattle();
-//        assertNotNull(result);
-//    }
+    @Test
+    public void getUserForBattleTest() {
+        when(waitUsers.getWaitList().keySet()).thenReturn(logins);
+        when(waitUsers.getWaitList().keySet().iterator()).thenReturn(iterator);
+        when(waitUsers.getWaitList().remove(waitUsers.getWaitList().keySet().iterator().next())).thenReturn(uDto);
+        WaitService service = new WaitService(waitUsers);
+        UserDto result = service.getUserForBattle();
+        assertNotNull(result);
+    }
 
     @Test
     public void waitUsersListContainsUserByLoginTestExist() {

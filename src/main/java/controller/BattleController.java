@@ -1,7 +1,7 @@
 package controller;
 
+import dto.UserDto;
 import entity.Battle;
-import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +31,12 @@ public class BattleController {
     @GetMapping
     public ModelAndView battleView(HttpServletRequest req,
                                    HttpServletResponse resp) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
 //        if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer1())) {
-        if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer1())) {
+        if (uDto != null && uDto.equals(battleService.getBattleById(battleService.isUserInBattle2(uDto.getLogin())).getPlayer1())) {
             return new ModelAndView("battle", "b", battleService.getBattleById((Integer) req.getSession().getAttribute("battleId")));
 //        } else if (u != null && u.equals(battleService.isUserInBattle(u.getLogin()).getPlayer2())) {
-        } else if (u != null && u.equals(battleService.getBattleById(battleService.isUserInBattle2(u.getLogin())).getPlayer2())) {
+        } else if (uDto != null && uDto.equals(battleService.getBattleById(battleService.isUserInBattle2(uDto.getLogin())).getPlayer2())) {
             return new ModelAndView("battle", "b", battleService.inverse(battleService.getBattleById((Integer) req.getSession().getAttribute("battleId"))));
         } else {
             resp.sendRedirect("/fs/");
@@ -53,34 +53,34 @@ public class BattleController {
                        @RequestParam(required = false) String endTurn,
                        @RequestParam(required = false) String power,
                        @RequestParam(required = false) String attackHero) throws IOException {
-        User u = userService.getUserAttributeFromSession(req.getSession());
-        if (u != null) {
+        UserDto uDto = userService.getUserDtoAttributeFromSession(req.getSession());
+        if (uDto != null) {
             Integer battleId = (Integer) req.getSession().getAttribute("battleId");
             Battle b = battleService.getBattleById(battleId);
             if (endTurn != null) {
-                battleService.processEndTurn(u.getLogin(), b);
+                battleService.processEndTurn(uDto.getLogin(), b);
             }
             if (hand != null) {
-                battleService.doPlaceCard(b, u.getLogin(), hand);
+                battleService.doPlaceCard(b, uDto.getLogin(), hand);
             }
             if (power != null) {
-                battleService.doHeroPower(b, u.getLogin());
+                battleService.doHeroPower(b, uDto.getLogin());
             }
             if (attackHero != null) {
-                battleService.doAttackHero(b, u.getLogin());
+                battleService.doAttackHero(b, uDto.getLogin());
             }
             if (table != null) {
                 if (table < 0) {
-                    battleService.doUnchooseOnTableLogic(b, u.getLogin(), table);
+                    battleService.doUnchooseOnTableLogic(b, uDto.getLogin(), table);
                 }
-                battleService.doChooseOnTableLogic(b, u.getLogin(), table);
+                battleService.doChooseOnTableLogic(b, uDto.getLogin(), table);
             }
             if (attack != null) {
-                battleService.doAttackCard(b, u.getLogin(), attack);
+                battleService.doAttackCard(b, uDto.getLogin(), attack);
             }
 
             if (battleService.isSomeHeroDead(b)) {
-                battleService.processEndTurn(u.getLogin(), b);
+                battleService.processEndTurn(uDto.getLogin(), b);
                 req.getSession().setAttribute("battleId", b.getId());
                 resp.sendRedirect("/fs/finish/");
             } else {
